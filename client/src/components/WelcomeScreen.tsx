@@ -67,10 +67,10 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
 
   return (
     <div className="min-h-[70vh] px-4 pt-16 pb-10 lg:pt-24 flex justify-center">
-      <div className="w-full flex flex-col items-center gap-10 lg:grid lg:grid-cols-[minmax(0,520px)_minmax(0,760px)_minmax(0,420px)] lg:items-start lg:justify-items-center">
+      <div className="w-full flex flex-col items-center gap-10 lg:flex lg:flex-row lg:items-start lg:justify-center lg:gap-16 lg:max-w-[1600px] mx-auto">
         {/* Today's Meal Banner */}
-        <div className="hidden lg:flex w-full justify-start pl-10">
-          <div className="w-full max-w-[760px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl px-8 py-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
+        <div className="hidden lg:flex w-full lg:w-[420px] justify-center flex-shrink-0">
+          <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl px-8 py-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">캠퍼스 다이닝</p>
@@ -119,7 +119,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           </div>
         </div>
 
-        <div className="w-full max-w-2xl flex flex-col items-center text-center mx-auto">
+        <div className="w-full max-w-3xl flex flex-col items-center text-center mx-auto">
           {/* Logo */}
           <div className="mb-6">
             <img
@@ -167,7 +167,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </div>
 
         {/* Right Placeholder */}
-        <div className="hidden lg:flex w-full justify-end pr-10">
+        <div className="hidden lg:flex w-full lg:w-[420px] justify-center flex-shrink-0">
           <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
