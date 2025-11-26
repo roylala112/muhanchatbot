@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import logoImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
+import footerCharacter from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
 
 export interface Category {
   id: string;
@@ -66,10 +67,10 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   };
 
   return (
-    <div className="min-h-[70vh] px-4 pt-16 pb-10 lg:pt-24 flex justify-center">
-      <div className="w-full flex flex-col items-center gap-10 lg:flex lg:flex-row lg:items-start lg:justify-center lg:gap-16 lg:max-w-[1600px] mx-auto">
+    <div className="relative min-h-[70vh] px-4 pt-16 pb-36 lg:pt-24 flex justify-center">
+      <div className="w-full flex flex-col items-center gap-10 xl:flex xl:flex-row xl:items-start xl:justify-center xl:gap-16 xl:max-w-[1600px] mx-auto">
         {/* Today's Meal Banner */}
-        <div className="hidden lg:flex w-full lg:w-[420px] justify-center flex-shrink-0">
+        <div className="hidden xl:flex w-full xl:w-[420px] justify-center flex-shrink-0">
           <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl px-8 py-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
@@ -167,7 +168,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </div>
 
         {/* Right Placeholder */}
-        <div className="hidden lg:flex w-full lg:w-[420px] justify-center flex-shrink-0">
+        <div className="hidden xl:flex w-full xl:w-[420px] justify-center flex-shrink-0">
           <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
@@ -202,6 +203,12 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           </div>
         </div>
       </div>
+
+      <img
+        src={footerCharacter}
+        alt="무당이 캐릭터"
+        className="hidden lg:block w-48 h-48 object-contain absolute -bottom-20 right-48 opacity-95 drop-shadow-xl pointer-events-none"
+      />
     </div>
   );
 }

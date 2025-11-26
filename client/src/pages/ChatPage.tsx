@@ -12,6 +12,7 @@ const INITIAL_MESSAGES: ChatMessageProps[] = [];
 
 //todo: remove mock functionality - these are example categories
 const CATEGORIES = [
+  { id: "meal", label: "학식" },
   { id: "scholarship", label: "장학금" },
   { id: "schedule", label: "학사일정" },
   { id: "course", label: "수강신청" },
@@ -174,6 +175,17 @@ export default function ChatPage() {
           {/* Input Area */}
           <ChatInput onSendMessage={handleSendMessage} />
         </>
+      )}
+      
+      {/* Character Image - Only shown on welcome screen */}
+      {messages.length === 0 && (
+        <div className="fixed right-[calc(50%+420px)] bottom-10 z-20 w-48 h-48 md:w-64 md:h-64">
+          <img 
+            src="/images/muhanee.png" 
+            alt="무한이 캐릭터" 
+            className="w-full h-full object-contain drop-shadow-xl"
+          />
+        </div>
       )}
     </div>
   );
