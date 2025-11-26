@@ -1,6 +1,5 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Sparkles, User } from "lucide-react";
 import { SourceLink } from "./SourceLink";
+import mascotImage from "@assets/mascot.png";
 
 export interface ChatMessageProps {
   role: "user" | "assistant";
@@ -18,11 +17,13 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
       data-testid={`message-${role}`}
     >
       {!isUser && (
-        <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarFallback className="bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
-          </AvatarFallback>
-        </Avatar>
+        <div className="flex-shrink-0">
+          <img 
+            src={mascotImage} 
+            alt="마스코트" 
+            className="h-12 w-12 object-contain"
+          />
+        </div>
       )}
 
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[85%] md:max-w-3xl`}>
@@ -52,13 +53,6 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
         )}
       </div>
 
-      {isUser && (
-        <Avatar className="h-8 w-8 flex-shrink-0">
-          <AvatarFallback className="bg-secondary text-secondary-foreground">
-            <User className="h-4 w-4" />
-          </AvatarFallback>
-        </Avatar>
-      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
-import logoImage from "@assets/gachon_1764064688276.png";
+import logoImage from "@assets/mascot.png";
 
 export interface Category {
   id: string;
@@ -57,15 +57,15 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="무엇이든 물어보세요"
-            className="w-full rounded-full pl-6 pr-16 py-7 text-base border-2 border-primary/30 bg-background shadow-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
+            className="w-full rounded-full pl-6 pr-14 py-7 text-base border-2 border-primary/30 bg-background shadow-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
             data-testid="input-welcome-search"
           />
           <button
             onClick={handleSearch}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover-elevate active-elevate-2 rounded-full"
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center hover:opacity-80 transition-opacity"
             data-testid="button-welcome-search"
           >
-            <Search className="h-7 w-7 text-primary" />
+            <Search className="h-9 w-9 text-primary" />
           </button>
         </div>
       </div>

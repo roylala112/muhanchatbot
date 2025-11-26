@@ -111,7 +111,7 @@ export default function ChatPage() {
     <div className="flex flex-col h-screen">
       {/* Header */}
       <header className="relative h-16 border-b border-border flex items-center justify-between px-4 md:px-8 flex-shrink-0">
-        <div className="flex items-center gap-3 w-24">
+        <div className="flex items-center gap-3 flex-shrink-0">
           {messages.length > 0 && (
             <Button 
               size="icon" 
@@ -128,6 +128,7 @@ export default function ChatPage() {
           size="icon"
           variant="ghost"
           onClick={() => setIsDark(!isDark)}
+          className="flex-shrink-0"
           data-testid="button-theme-toggle"
         >
           {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -146,7 +147,7 @@ export default function ChatPage() {
       ) : (
         <>
           {/* Category Navigation */}
-          <div className="sticky top-0 z-10 bg-background border-b border-border py-3 flex-shrink-0">
+          <div className="sticky top-0 z-10 bg-background border-b border-border py-3 flex-shrink-0 flex justify-center">
             <CategoryPills categories={CATEGORIES} onCategorySelect={handleCategorySelect} />
           </div>
 

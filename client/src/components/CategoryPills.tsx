@@ -22,7 +22,7 @@ export function CategoryPills({ categories, onCategorySelect }: CategoryPillsPro
   };
 
   return (
-    <div className="flex items-center gap-2 overflow-x-auto pb-2 px-4 md:px-8 scrollbar-hide">
+    <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 px-4 md:px-8 scrollbar-hide">
       {categories.map((category) => (
         <Badge
           key={category.id}
