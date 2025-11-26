@@ -70,18 +70,18 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
       <div className="w-full flex flex-col items-center gap-10 lg:grid lg:grid-cols-[minmax(0,520px)_minmax(0,760px)_minmax(0,420px)] lg:items-start lg:justify-items-center">
         {/* Today's Meal Banner */}
         <div className="hidden lg:flex w-full justify-start pl-10">
-          <div className="w-full max-w-[760px] bg-white border border-primary/20 rounded-3xl px-8 py-6 shadow-md flex flex-col gap-4 text-left">
+          <div className="w-full max-w-[760px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl px-8 py-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-primary/70 font-semibold">캠퍼스 다이닝</p>
-                <h2 className="text-3xl font-bold text-primary">오늘의 학식</h2>
+                <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">캠퍼스 다이닝</p>
+                <h2 className="text-3xl font-bold text-primary dark:text-white">오늘의 학식</h2>
               </div>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-none px-3 py-1">
+              <Badge variant="secondary" className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white border-none px-3 py-1">
                 업데이트 예정
               </Badge>
             </div>
 
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground dark:text-slate-300">
               백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
             </p>
 
@@ -92,7 +92,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                   className={`flex-1 rounded-2xl border px-3 py-2 text-sm font-semibold transition-colors ${
                     activeMealTab === tab.id
                       ? "bg-primary text-white border-primary shadow"
-                      : "bg-muted border-muted-foreground/20 text-muted-foreground hover:border-primary/50"
+                      : "bg-muted dark:bg-slate-800 border-muted-foreground/20 dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:border-primary/50 dark:hover:border-primary/60"
                   }`}
                   onClick={() => setActiveMealTab(tab.id)}
                 >
@@ -105,15 +105,15 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
               {activeMeal?.menus.map((menu) => (
                 <div
                   key={menu.item}
-                  className="p-4 rounded-2xl bg-muted/50 border border-muted-foreground/20 flex items-center justify-between"
+                  className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700 flex items-center justify-between"
                 >
-                  <span className="text-base font-semibold text-primary">{menu.item}</span>
-                  <span className="text-sm font-semibold text-muted-foreground">{menu.price}</span>
+                  <span className="text-base font-semibold text-primary dark:text-white">{menu.item}</span>
+                  <span className="text-sm font-semibold text-muted-foreground dark:text-slate-300">{menu.price}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center">
               * 실제 메뉴는 추후 시스템 연동 후 자동 갱신됩니다.
             </p>
           </div>
@@ -168,17 +168,17 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
 
         {/* Right Placeholder */}
         <div className="hidden lg:flex w-full justify-end pr-10">
-          <div className="w-full max-w-[420px] bg-white border border-primary/20 rounded-3xl p-6 shadow-md flex flex-col gap-4 text-left">
+          <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-primary/70 font-semibold">캠퍼스 캘린더</p>
-                <h3 className="text-2xl font-bold text-primary">오늘의 학사일정</h3>
+                <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">캠퍼스 캘린더</p>
+                <h3 className="text-2xl font-bold text-primary dark:text-white">오늘의 학사일정</h3>
               </div>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-none">
+              <Badge variant="secondary" className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white border-none">
                 업데이트 예정
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground dark:text-slate-300">
               백엔드 연동 후 오늘 진행 중인 주요 학사 일정을 자동으로 알려줄 예정입니다.
             </p>
             <div className="space-y-3">
@@ -187,13 +187,16 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                 { title: "비전타워 취업특강", time: "13:00 • 비전타워 202호" },
                 { title: "기숙사 사생 회의", time: "18:30 • 온라인" },
               ].map((schedule) => (
-                <div key={schedule.title} className="p-3 rounded-2xl bg-muted/60 border border-muted">
-                  <p className="text-sm font-semibold text-primary">{schedule.title}</p>
-                  <p className="text-xs text-muted-foreground">{schedule.time}</p>
+                <div
+                  key={schedule.title}
+                  className="p-3 rounded-2xl bg-muted/60 dark:bg-slate-800 border border-muted dark:border-slate-700"
+                >
+                  <p className="text-sm font-semibold text-primary dark:text-white">{schedule.title}</p>
+                  <p className="text-xs text-muted-foreground dark:text-slate-400">{schedule.time}</p>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center">
               * 실제 일정은 추후 시스템 연동 후 자동 갱신됩니다.
             </p>
           </div>
