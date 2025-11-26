@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
-import logoImage from "@assets/mascot.png";
+import logoImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
 
 export interface Category {
   id: string;
