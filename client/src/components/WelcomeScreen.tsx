@@ -66,7 +66,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   };
 
   return (
-    <div className="min-h-[70vh] px-4 py-8 flex justify-center">
+    <div className="min-h-[70vh] px-4 pt-16 pb-10 lg:pt-24 flex justify-center">
       <div className="w-full flex flex-col items-center gap-10 lg:grid lg:grid-cols-[minmax(0,520px)_minmax(0,760px)_minmax(0,420px)] lg:items-start lg:justify-items-center">
         {/* Today's Meal Banner */}
         <div className="hidden lg:flex w-full justify-start pl-10">
