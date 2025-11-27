@@ -1,6 +1,18 @@
 import { SourceLink } from "./SourceLink";
 import mascotImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
 
+// Add the font face style
+document.head.insertAdjacentHTML('beforeend', `
+  <style>
+    @font-face {
+      font-family: 'Presentation';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+  </style>
+`);
+
 export interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
@@ -28,8 +40,8 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
 
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[85%] md:max-w-3xl`}>
         {isUser ? (
-          <div className="bg-[#E0E0E0] dark:bg-[#202A44] text-foreground dark:text-white rounded-3xl px-5 py-3">
-            <p className="text-base leading-relaxed whitespace-pre-wrap">{content}</p>
+          <div className="bg-[#E0E0E0] dark:bg-[#202A44] text-[#516295] dark:text-white rounded-3xl px-5 py-3">
+            <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{content}</p>
             {sources && sources.length > 0 && (
               <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
                 {sources.map((source, idx) => (
@@ -46,8 +58,8 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
               boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
             }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-[22px] px-5 py-3">
-              <p className="text-base leading-relaxed whitespace-pre-wrap">{content}</p>
+            <div className="bg-white dark:bg-slate-800 rounded-[22px] px-5 py-3 text-[#516295] dark:text-white">
+              <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{content}</p>
               {sources && sources.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
                   {sources.map((source, idx) => (
