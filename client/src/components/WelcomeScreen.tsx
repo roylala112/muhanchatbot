@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import logoImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
 import footerCharacter from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
+import footerCharacter2 from "C:/Users/user/OneDrive/Pictures/피프사진/무한이.png";
 
 export interface Category {
   id: string;
@@ -208,6 +209,12 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         src={footerCharacter}
         alt="무당이 캐릭터"
         className="hidden lg:block w-48 h-48 object-contain absolute -bottom-20 right-48 opacity-95 drop-shadow-xl pointer-events-none"
+      />
+
+      <img
+        src={footerCharacter2}
+        alt="무한이 캐릭터"
+        className="hidden lg:block w-56 h-56 object-contain absolute left-40 -bottom-20 opacity-95 drop-shadow-xl pointer-events-none"
       />
     </div>
   );

@@ -176,17 +176,6 @@ export default function ChatPage() {
           <ChatInput onSendMessage={handleSendMessage} />
         </>
       )}
-      
-      {/* Character Image - Only shown on welcome screen */}
-      {messages.length === 0 && (
-        <div className="fixed right-[calc(50%+420px)] bottom-10 z-20 w-48 h-48 md:w-64 md:h-64">
-          <img 
-            src="/images/muhanee.png" 
-            alt="무한이 캐릭터" 
-            className="w-full h-full object-contain drop-shadow-xl"
-          />
-        </div>
-      )}
     </div>
   );
 }
