@@ -1,6 +1,5 @@
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import logoImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
 import footerCharacter from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
@@ -123,33 +122,45 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
 
         <div className="w-full max-w-3xl flex flex-col items-center text-center mx-auto">
           {/* Logo */}
-          <div className="mb-6">
+          <div className="mb-2">
             <img
               src={logoImage}
               alt="AI 도우미"
-              className="h-48 w-48 md:h-56 md:w-56"
+              className="h-56 w-48 md:h-64 md:w-56 object-contain"
+              style={{ marginBottom: '1.5rem' }}
               data-testid="logo-mascot"
             />
           </div>
 
           {/* Search Input */}
-          <div className="w-full mb-6">
-            <div className="relative">
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="무엇이든 물어보세요"
-                className="w-full rounded-full pl-6 pr-14 py-7 text-base border-2 border-primary/30 bg-background shadow-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
-                data-testid="input-welcome-search"
-              />
-              <button
-                onClick={handleSearch}
-                className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center hover:opacity-80 transition-opacity"
-                data-testid="button-welcome-search"
-              >
-                <Search className="h-9 w-9 text-primary" />
-              </button>
+          <div className="w-full mb-5">
+            <div
+              className="p-[1.5px] rounded-full"
+              style={{
+                background:
+                  "linear-gradient(90deg, #2F5093, #6AB7EC, #92C157, #EAA93D)",
+                boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
+              }}
+            >
+              {/* 내부 흰색 박스*/}
+              <div className="rounded-full bg-white flex items-center px-4 h-[45px]">
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="무엇이든 물어보세요"
+                  className="flex-1 text-base bg-transparent outline-none border-none 
+                  focus:outline-none focus:ring-0 focus:border-none"
+                  data-testid="input-welcome-search"
+                />
+                <button
+                  onClick={handleSearch}
+                  className="hover:opacity-80 transition"
+                  data-testid="button-welcome-search"
+                >
+                  <Send className="h-6 w-6 text-[#43609C]" />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -158,7 +169,8 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             {categories.map((category) => (
               <button
                 key={category.id}
-                className="bg-[#5b6b9e] hover:bg-[#6b7bae] active:bg-[#4b5b8e] text-white rounded-lg px-6 py-3 text-base font-semibold transition-colors shadow-sm"
+                className="rounded-full bg-white/40 backdrop-blur-md px-5 py-2 text-sm font-medium shadow-sm border border-[#E4E4E7] hover:bg-white/60 hover:shadow-md transition-all duration-200
+                          dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700"
                 onClick={() => handleCategoryClick(category.id)}
                 data-testid={`welcome-category-${category.id}`}
               >
