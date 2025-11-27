@@ -1,5 +1,5 @@
 import { SourceLink } from "./SourceLink";
-import mascotImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
+import mascotImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
 
 export interface ChatMessageProps {
   role: "user" | "assistant";

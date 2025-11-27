@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
-import logoImage from "C:/Users/user/OneDrive/Pictures/gachon mascot.png";
+import logoImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
 import footerCharacter from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
 import footerCharacter2 from "C:/Users/user/OneDrive/Pictures/피프사진/무한이.png";
 
@@ -142,15 +142,16 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                 boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
               }}
             >
-              {/* 내부 흰색 박스*/}
-              <div className="rounded-full bg-white flex items-center px-4 h-[45px]">
+              {/* 내부 박스 - 라이트/다크 모드 지원 */}
+              <div className="rounded-full bg-white dark:bg-slate-800 flex items-center px-4 h-[45px]">
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="무엇이든 물어보세요"
                   className="flex-1 text-base bg-transparent outline-none border-none 
-                  focus:outline-none focus:ring-0 focus:border-none"
+                  focus:outline-none focus:ring-0 focus:border-none
+                  dark:text-white dark:placeholder-gray-400"
                   data-testid="input-welcome-search"
                 />
                 <button
@@ -158,7 +159,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                   className="hover:opacity-80 transition"
                   data-testid="button-welcome-search"
                 >
-                  <Send className="h-6 w-6 text-[#43609C]" />
+                  <Send className="h-6 w-6 text-[#43609C] dark:text-blue-300" />
                 </button>
               </div>
             </div>
