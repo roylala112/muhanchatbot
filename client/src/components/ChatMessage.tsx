@@ -27,32 +27,44 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
       )}
 
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[85%] md:max-w-3xl`}>
-        <div
-          className={`rounded-2xl px-4 py-3 ${
-            isUser
-              ? "bg-primary text-primary-foreground"
-              : "bg-card border border-card-border"
-          }`}
-          data-testid={`bubble-${role}`}
-        >
-          <p className="text-base leading-relaxed whitespace-pre-wrap">{content}</p>
-
-          {sources && sources.length > 0 && (
-            <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
-              {sources.map((source, idx) => (
-                <SourceLink key={idx} title={source.title} url={source.url} />
-              ))}
+        {isUser ? (
+          <div className="bg-[#E0E0E0] dark:bg-[#202A44] text-foreground dark:text-white rounded-3xl px-5 py-3">
+            <p className="text-base leading-relaxed whitespace-pre-wrap">{content}</p>
+            {sources && sources.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
+                {sources.map((source, idx) => (
+                  <SourceLink key={idx} title={source.title} url={source.url} />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div 
+            className="p-[1.5px] rounded-3xl"
+            style={{
+              background: "linear-gradient(90deg, #2F5093, #6AB7EC, #92C157, #EAA93D)",
+              boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <div className="bg-white dark:bg-slate-800 rounded-[22px] px-5 py-3">
+              <p className="text-base leading-relaxed whitespace-pre-wrap">{content}</p>
+              {sources && sources.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
+                  {sources.map((source, idx) => (
+                    <SourceLink key={idx} title={source.title} url={source.url} />
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-
-        {timestamp && (
-          <span className="text-xs text-muted-foreground mt-1 px-1">
-            {timestamp}
-          </span>
+          </div>
         )}
       </div>
 
+      {timestamp && (
+        <span className="text-xs text-muted-foreground mt-1 px-1">
+          {timestamp}
+        </span>
+      )}
     </div>
   );
 }
