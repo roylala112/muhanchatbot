@@ -137,7 +137,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             title="오늘의 학식"
             subtitle="캠퍼스 다이닝"
             badgeText="업데이트 예정"
-            defaultExpanded={true}
+            defaultExpanded={false}
           >
             <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
               백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
@@ -181,7 +181,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             title="오늘의 학사일정"
             subtitle="캠퍼스 캘린더"
             badgeText="업데이트 예정"
-            defaultExpanded={true}
+            defaultExpanded={false}
           >
             <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
               백엔드 연동 후 오늘 진행 중인 주요 학사 일정을 자동으로 알려줄 예정입니다.
