@@ -35,7 +35,7 @@ export function CategoryPills({ categories, onCategorySelect }: CategoryPillsPro
           onClick={() => handleClick(category.id)}
           data-testid={`category-${category.id}`}
         >
-          #{category.label}
+          {category.label}
         </Badge>
       ))}
     </div>

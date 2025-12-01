@@ -12,21 +12,24 @@ const INITIAL_MESSAGES: ChatMessageProps[] = [];
 
 //todo: remove mock functionality - these are example categories
 const CATEGORIES = [
-  { id: "meal", label: "학식" },
-  { id: "scholarship", label: "장학금" },
-  { id: "schedule", label: "학사일정" },
-  { id: "course", label: "수강신청" },
-  { id: "seasonal", label: "계절학기" },
-  { id: "leave", label: "휴학" },
-  { id: "return", label: "복학" },
-  { id: "tuition", label: "등록금" },
+  { id: "campus_map", label: "🗺️ 캠퍼스맵" },
+  { id: "schedule", label: "📆 학사일정" },
+  { id: "course", label: "💻 수강신청" },
+  { id: "contacts", label: "☎️ 교내연락처" },
+  { id: "tuition", label: "💰 등록금" },
+  { id: "facilities", label: "🏪 편의시설" },
+  { id: "library", label: "📖 도서관" },
 ];
 
 //todo: remove mock functionality - these are category-based suggestions
 const CATEGORY_SUGGESTIONS: Record<string, string[]> = {
-  course: ["일정", "방법", "우선순위", "유의사항"],
-  scholarship: ["신청 방법", "자격 요건", "지급 시기", "종류"],
-  leave: ["신청 기간", "필요 서류", "등록금 환불", "최대 기간"],
+  campus_map: ["캠퍼스 지도", "건물 위치", "주요 시설 위치", "교내 이동 경로"],
+  schedule: ["학사일정 확인", "휴일/공휴일", "시험 일정", "수강신청 기간"],
+  course: ["수강신청 방법", "시간표 조회", "강의 계획서", "수강정정 기간"],
+  contacts: ["학과 사무실", "교수진 연락처", "행정부서 연락처", "긴급 연락처"],
+  tuition: ["등록금 납부 기간", "분할납부 안내", "등록금 환불", "장학금 안내"],
+  facilities: ["식당 운영시간", "카페 위치", "편의점 위치", "주차장 안내"],
+  library: ["도서 검색", "열람실 예약", "도서 대출/반납", "운영시간"],
 };
 
 export default function ChatPage() {
@@ -75,13 +78,13 @@ export default function ChatPage() {
   const handleCategorySelect = (categoryId: string) => {
     //todo: remove mock functionality - category names mapping
     const categoryNames: Record<string, string> = {
-      scholarship: "장학금",
+      campus_map: "캠퍼스맵",
       schedule: "학사일정",
       course: "수강신청",
-      seasonal: "계절학기",
-      leave: "휴학",
-      return: "복학",
+      contacts: "교내연락처",
       tuition: "등록금",
+      facilities: "편의시설",
+      library: "도서관",
     };
     
     const categoryName = categoryNames[categoryId] || categoryId;
@@ -90,7 +93,7 @@ export default function ChatPage() {
     //todo: remove mock functionality - add category message to conversation
     setMessages(prev => [...prev, {
       role: "assistant",
-      content: `#${categoryName}에 대해 알려드릴까요?\n아래 질문 중 선택하시거나, 직접 질문해주세요!`,
+      content: `${categoryName}에 대해 알려드릴까요?\n아래 질문 중 선택하시거나, 직접 질문해주세요!`,
       timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
     }]);
     

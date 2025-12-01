@@ -124,7 +124,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                 onClick={() => handleCategoryClick(category.id)}
                 data-testid={`welcome-category-${category.id}`}
               >
-                #{category.label}
+                {category.label}
               </button>
             ))}
           </div>
