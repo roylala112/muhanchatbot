@@ -263,7 +263,11 @@ export default function ChatPage() {
           <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6 w-full">
             <div className="w-full">
               {messages.map((msg, idx) => (
-                <ChatMessage key={idx} {...msg} />
+                <ChatMessage 
+                  key={idx} 
+                  {...msg} 
+                  onCategorySelect={handleCategorySelect}
+                />
               ))}
 
               {suggestions.length > 0 && (

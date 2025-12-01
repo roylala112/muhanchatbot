@@ -45,17 +45,32 @@ const CategoryButton = ({ category, onClick }: { category: string; onClick: (cat
   );
 };
 
-export function ChatMessage({ role, content, sources, timestamp }: ChatMessageProps) {
+export function ChatMessage({ role, content, sources, timestamp, onCategorySelect }: ChatMessageProps & { onCategorySelect?: (categoryId: string) => void }) {
   const isUser = role === "user";
 
   // Function to handle category button click
   const handleCategoryClick = useCallback((category: string) => {
     // Remove # if present
     const cleanCategory = category.startsWith('#') ? category.slice(1) : category;
-    // Emit an event or navigate to the category
     console.log(`Category selected: ${cleanCategory}`);
-    // You can add navigation logic here if needed
-  }, []);
+    
+    // Call the onCategorySelect prop if it exists
+    if (onCategorySelect) {
+      // Map the Korean category name back to its ID
+      const categoryMap: Record<string, string> = {
+        '캠퍼스맵': 'campus_map',
+        '학사일정': 'schedule',
+        '수강신청': 'course',
+        '교내연락처': 'contacts',
+        '등록금': 'tuition',
+        '편의시설': 'facilities',
+        '도서관': 'library'
+      };
+      
+      const categoryId = categoryMap[cleanCategory] || cleanCategory;
+      onCategorySelect(categoryId);
+    }
+  }, [onCategorySelect]);
 
   // Function to render content with hashtags as buttons
   const renderContent = (text: string) => {
