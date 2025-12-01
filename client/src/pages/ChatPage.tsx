@@ -36,6 +36,10 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessageProps[]>(INITIAL_MESSAGES);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isDark, setIsDark] = useState(false);
+  const [hasShownGreeting, setHasShownGreeting] = useState(() => {
+    // Check if greeting was shown before using localStorage
+    return localStorage.getItem('hasShownGreeting') === 'true';
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,28 +55,75 @@ export default function ChatPage() {
   }, [isDark]);
 
   const handleSendMessage = (content: string) => {
-    const userMessage: ChatMessageProps = {
-      role: "user",
-      content,
-      timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-
-    //todo: remove mock functionality - this simulates AI response
-    setTimeout(() => {
-      const aiMessage: ChatMessageProps = {
+    // Show greeting message if it's the first interaction
+    if (!hasShownGreeting) {
+      const greetingMessage: ChatMessageProps = {
         role: "assistant",
-        content: `${content}에 대한 답변입니다.\n\n현재는 프로토타입 단계로 실제 AI 응답은 백엔드 연동 후 제공됩니다.`,
+        content: "안녕하세요! 가천대학교 AI 도우미입니다.\n어떤 것이 궁금하신가요?",
         timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
-        sources: [
-          { title: "학사안내 공지사항", url: "#" },
-          { title: "관련 PDF 문서", url: "#" },
-        ],
       };
-      setMessages((prev) => [...prev, aiMessage]);
-      setSuggestions(["추가 질문 1", "추가 질문 2", "추가 질문 3"]);
-    }, 1000);
+      
+      // Set the greeting message first and mark greeting as shown
+      setMessages([greetingMessage]);
+      // Save to localStorage and update state
+      localStorage.setItem('hasShownGreeting', 'true');
+      setHasShownGreeting(true);
+      
+      // Add user's message after a short delay
+      setTimeout(() => {
+        const userMessage: ChatMessageProps = {
+          role: "user",
+          content,
+          timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+        };
+        
+        // Add user message
+        setMessages(prev => [...prev, userMessage]);
+        
+        // Add bot's response after another short delay
+        setTimeout(() => {
+          const aiMessage: ChatMessageProps = {
+            role: "assistant",
+            content: `${content}에 대한 답변입니다.\n\n현재는 프로토타입 단계로 실제 AI 응답은 백엔드 연동 후 제공됩니다.`,
+            timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+            sources: [
+              { title: "학사안내 공지사항", url: "#" },
+              { title: "관련 PDF 문서", url: "#" },
+            ],
+          };
+          
+          setMessages(prev => [...prev, aiMessage]);
+          setSuggestions(["추가 질문 1", "추가 질문 2", "추가 질문 3"]);
+        }, 500);
+      }, 500);
+    } else {
+      // If greeting was already shown, proceed directly to user's message and bot's response
+      const userMessage: ChatMessageProps = {
+        role: "user",
+        content,
+        timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+      };
+      
+      // Add user message first
+      const updatedMessages = [...messages, userMessage];
+      setMessages(updatedMessages);
+      
+      // Add bot's response after a short delay
+      setTimeout(() => {
+        const aiMessage: ChatMessageProps = {
+          role: "assistant",
+          content: `${content}에 대한 답변입니다.\n\n현재는 프로토타입 단계로 실제 AI 응답은 백엔드 연동 후 제공됩니다.`,
+          timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+          sources: [
+            { title: "학사안내 공지사항", url: "#" },
+            { title: "관련 PDF 문서", url: "#" },
+          ],
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+        setSuggestions(["추가 질문 1", "추가 질문 2", "추가 질문 3"]);
+      }, 500);
+    }
   };
 
   const handleCategorySelect = (categoryId: string) => {
@@ -90,14 +141,67 @@ export default function ChatPage() {
     const categoryName = categoryNames[categoryId] || categoryId;
     const categorySuggestions = CATEGORY_SUGGESTIONS[categoryId] || [];
     
-    //todo: remove mock functionality - add category message to conversation
-    setMessages(prev => [...prev, {
-      role: "assistant",
-      content: `${categoryName}에 대해 알려드릴까요?\n아래 질문 중 선택하시거나, 직접 질문해주세요!`,
-      timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
-    }]);
-    
-    setSuggestions(categorySuggestions);
+    // Show greeting message if it's the first interaction
+    if (!hasShownGreeting) {
+      const greetingMessage: ChatMessageProps = {
+        role: "assistant",
+        content: "안녕하세요! 가천대학교 AI 도우미입니다.\n어떤 것이 궁금하신가요?",
+        timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+      };
+      
+      // Set the greeting message first and mark greeting as shown
+      setMessages([greetingMessage]);
+      // Save to localStorage and update state
+      localStorage.setItem('hasShownGreeting', 'true');
+      setHasShownGreeting(true);
+      
+      // Add user's category selection after a short delay
+      setTimeout(() => {
+        const userMessage: ChatMessageProps = {
+          role: "user",
+          content: `#${categoryName}`,
+          timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+        };
+        
+        // Add user message
+        setMessages(prev => [...prev, userMessage]);
+        
+        // Add bot's response after another short delay
+        setTimeout(() => {
+          const aiMessage: ChatMessageProps = {
+            role: "assistant",
+            content: `${categoryName}에 대해 알려드릴까요?\n아래 질문 중 선택하시거나, 직접 질문해주세요!`,
+            timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+          };
+          
+          setMessages(prev => [...prev, aiMessage]);
+          setSuggestions(categorySuggestions);
+        }, 500);
+      }, 500);
+    } else {
+      // If greeting was already shown, just add the category interaction
+      const userMessage: ChatMessageProps = {
+        role: "user",
+        content: `#${categoryName}`,
+        timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+      };
+      
+      // Add user message first
+      const updatedMessages = [...messages, userMessage];
+      setMessages(updatedMessages);
+      
+      // Add bot's response after a short delay
+      setTimeout(() => {
+        const aiMessage: ChatMessageProps = {
+          role: "assistant",
+          content: `${categoryName}에 대해 알려드릴까요?\n아래 질문 중 선택하시거나, 직접 질문해주세요!`,
+          timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+        setSuggestions(categorySuggestions);
+      }, 500);
+    }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -108,6 +212,9 @@ export default function ChatPage() {
   const handleGoHome = () => {
     setMessages([]);
     setSuggestions([]);
+    // Reset the greeting state when going home
+    localStorage.removeItem('hasShownGreeting');
+    setHasShownGreeting(false);
     console.log("Returning to home screen");
   };
 
