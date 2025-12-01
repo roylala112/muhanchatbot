@@ -145,7 +145,7 @@ export default function ChatPage() {
     if (!hasShownGreeting) {
       const greetingMessage: ChatMessageProps = {
         role: "assistant",
-        content: `안녕하세요! 가천대학교 AI 도우미입니다.\n\n#캠퍼스맵 #학사일정 #수강신청 #교내연락처\n#등록금 #편의시설 #도서관\n\n어떤 것이 궁금하신가요?`,
+        content: `안녕하세요! 가천대학교 AI 도우미입니다.\n\n#캠퍼스맵 #학사일정 #수강신청 #교내연락처 #등록금 #편의시설 #도서관\n\n어떤 것이 궁금하신가요?`,
         timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
       };
       
