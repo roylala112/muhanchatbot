@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
+import { CollapsibleBanner } from "./CollapsibleBanner";
 import logoImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
 import footerCharacter from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
 import footerCharacter2 from "C:/Users/user/OneDrive/Pictures/피프사진/무한이.png";
@@ -68,58 +69,8 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
 
   return (
     <div className="relative min-h-[70vh] px-4 pt-16 pb-36 lg:pt-24 flex justify-center">
-      <div className="w-full flex flex-col items-center gap-10 xl:flex xl:flex-row xl:items-start xl:justify-center xl:gap-16 xl:max-w-[1600px] mx-auto">
-        {/* Today's Meal Banner */}
-        <div className="hidden xl:flex w-full xl:w-[420px] justify-center flex-shrink-0">
-          <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl px-8 py-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">캠퍼스 다이닝</p>
-                <h2 className="text-3xl font-bold text-primary dark:text-white">오늘의 학식</h2>
-              </div>
-              <Badge variant="secondary" className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white border-none px-3 py-1">
-                업데이트 예정
-              </Badge>
-            </div>
-
-            <p className="text-sm text-muted-foreground dark:text-slate-300">
-              백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
-            </p>
-
-            <div className="flex gap-2">
-              {mealTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`flex-1 rounded-2xl border px-3 py-2 text-sm font-semibold transition-colors ${
-                    activeMealTab === tab.id
-                      ? "bg-primary text-white border-primary shadow"
-                      : "bg-muted dark:bg-slate-800 border-muted-foreground/20 dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:border-primary/50 dark:hover:border-primary/60"
-                  }`}
-                  onClick={() => setActiveMealTab(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-3" data-testid="today-meal-table">
-              {activeMeal?.menus.map((menu) => (
-                <div
-                  key={menu.item}
-                  className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700 flex items-center justify-between"
-                >
-                  <span className="text-base font-semibold text-primary dark:text-white">{menu.item}</span>
-                  <span className="text-sm font-semibold text-muted-foreground dark:text-slate-300">{menu.price}</span>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center">
-              * 실제 메뉴는 추후 시스템 연동 후 자동 갱신됩니다.
-            </p>
-          </div>
-        </div>
-
+      <div className="w-full flex flex-col items-center gap-10 xl:flex xl:flex-row xl:items-start xl:justify-center xl:gap-8 xl:max-w-[1800px] mx-auto">
+        {/* Left Side - Main Content */}
         <div className="w-full max-w-3xl flex flex-col items-center text-center mx-auto">
           {/* Logo */}
           <div className="mb-2">
@@ -142,7 +93,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                 boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
               }}
             >
-              {/* 내부 박스 - 라이트/다크 모드 지원 */}
+              {/* Inner box with light/dark mode support */}
               <div className="rounded-full bg-white dark:bg-slate-800 flex items-center px-4 h-[45px]">
                 <input
                   value={query}
@@ -181,40 +132,87 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           </div>
         </div>
 
-        {/* Right Placeholder */}
-        <div className="hidden xl:flex w-full xl:w-[420px] justify-center flex-shrink-0">
-          <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col gap-4 text-left">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">캠퍼스 캘린더</p>
-                <h3 className="text-2xl font-bold text-primary dark:text-white">오늘의 학사일정</h3>
-              </div>
-              <Badge variant="secondary" className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white border-none">
-                업데이트 예정
-              </Badge>
+        {/* Right Side - Collapsible Banners */}
+        <div className="hidden xl:flex flex-col gap-6 w-[420px] flex-shrink-0">
+          {/* Today's Meal Banner */}
+          <CollapsibleBanner
+            title="오늘의 학식"
+            subtitle="캠퍼스 다이닝"
+            badgeText="업데이트 예정"
+            defaultExpanded={true}
+          >
+            <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
+              백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
+            </p>
+
+            <div className="flex gap-2 mb-4">
+              {mealTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  className={`flex-1 rounded-2xl border px-3 py-2 text-sm font-semibold transition-colors ${
+                    activeMealTab === tab.id
+                      ? "bg-primary text-white border-primary shadow"
+                      : "bg-muted dark:bg-slate-800 border-muted-foreground/20 dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:border-primary/50 dark:hover:border-primary/60"
+                  }`}
+                  onClick={() => setActiveMealTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
-            <p className="text-sm text-muted-foreground dark:text-slate-300">
+
+            <div className="space-y-3" data-testid="today-meal-table">
+              {activeMeal?.menus.map((menu) => (
+                <div
+                  key={menu.item}
+                  className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700 flex items-center justify-between"
+                >
+                  <span className="text-base font-semibold text-primary dark:text-white">{menu.item}</span>
+                  <span className="text-sm font-semibold text-muted-foreground dark:text-slate-300">{menu.price}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
+              * 실제 메뉴는 추후 시스템 연동 후 자동 갱신됩니다.
+            </p>
+          </CollapsibleBanner>
+
+          {/* Campus Calendar Banner */}
+          <CollapsibleBanner
+            title="오늘의 학사일정"
+            subtitle="캠퍼스 캘린더"
+            badgeText="업데이트 예정"
+            defaultExpanded={true}
+          >
+            <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
               백엔드 연동 후 오늘 진행 중인 주요 학사 일정을 자동으로 알려줄 예정입니다.
             </p>
             <div className="space-y-3">
               {[
-                { title: "기말고사 D-3 안내", time: "09:00 • 공지사항" },
-                { title: "비전타워 취업특강", time: "13:00 • 비전타워 202호" },
-                { title: "기숙사 사생 회의", time: "18:30 • 온라인" },
-              ].map((schedule) => (
+                { time: "09:00 - 17:00", event: "2024학년도 2학기 수강신청" },
+                { time: "10:30 - 12:00", event: "캡스톤 디자인 발표회" },
+                { time: "14:00 - 16:00", event: "학부 연구생 모집 설명회" },
+              ].map((item, index) => (
                 <div
-                  key={schedule.title}
-                  className="p-3 rounded-2xl bg-muted/60 dark:bg-slate-800 border border-muted dark:border-slate-700"
+                  key={index}
+                  className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700"
                 >
-                  <p className="text-sm font-semibold text-primary dark:text-white">{schedule.title}</p>
-                  <p className="text-xs text-muted-foreground dark:text-slate-400">{schedule.time}</p>
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-300 rounded-lg px-2.5 py-1 text-xs font-medium">
+                      {item.time}
+                    </div>
+                    <p className="text-sm font-medium text-foreground dark:text-white">
+                      {item.event}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center">
-              * 실제 일정은 추후 시스템 연동 후 자동 갱신됩니다.
+            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
+              * 학사일정은 추후 시스템 연동 후 자동 갱신됩니다.
             </p>
-          </div>
+          </CollapsibleBanner>
         </div>
       </div>
 
