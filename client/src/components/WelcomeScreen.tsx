@@ -3,6 +3,7 @@ import { Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import { CollapsibleBanner } from "./CollapsibleBanner";
 import logoImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
+import gachonLogo from "C:/Users/user/OneDrive/Pictures/피프사진/무당이.png";
 
 export interface Category {
   id: string;
@@ -213,6 +214,20 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             </p>
           </CollapsibleBanner>
         </div>
+
+        {/* Gachon University Logo */}
+        <a 
+          href="https://www.gachon.ac.kr/kor/index.do" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="fixed left-48 bottom-8 hover:opacity-80 transition-opacity z-10"
+        >
+          <img 
+            src={gachonLogo} 
+            alt="Gachon University" 
+            className="h-80 w-auto"
+          />
+        </a>
       </div>
     </div>
   );
