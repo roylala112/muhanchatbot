@@ -37,10 +37,10 @@ const CategoryButton = ({ category, onClick }: { category: string; onClick: (cat
   return (
     <button
       onClick={() => onClick(category)}
-      className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-white dark:bg-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 p-1 m-0.5"
+      className="flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl bg-white dark:bg-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 p-1.5 m-0.5"
     >
-      <span className="text-xl mb-0.5">{categoryIcons[category] || '🔘'}</span>
-      <span className="text-[10px] font-medium text-center break-words leading-tight">{category}</span>
+      <span className="text-2xl mb-1">{categoryIcons[category] || '🔘'}</span>
+      <span className="text-xs font-medium text-center break-words leading-tight">{category}</span>
     </button>
   );
 };
