@@ -132,7 +132,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </div>
 
         {/* Right Side - Banners */}
-        <div className="hidden xl:flex flex-col gap-6 w-[300px] fixed right-8 top-32">
+        <div className="hidden xl:flex flex-col gap-6 w-[380px] fixed right-8 top-32">
           {/* Today's Meal Banner */}
           <CollapsibleBanner
             title="오늘의 학식"
