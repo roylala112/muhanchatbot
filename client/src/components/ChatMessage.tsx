@@ -37,10 +37,10 @@ const CategoryButton = ({ category, onClick }: { category: string; onClick: (cat
   return (
     <button
       onClick={() => onClick(category)}
-      className="flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-white dark:bg-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 p-2 m-1"
+      className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-white dark:bg-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 p-1 m-0.5"
     >
-      <span className="text-2xl mb-1">{categoryIcons[category] || '🔘'}</span>
-      <span className="text-xs font-medium text-center break-words">{category}</span>
+      <span className="text-xl mb-0.5">{categoryIcons[category] || '🔘'}</span>
+      <span className="text-[10px] font-medium text-center break-words leading-tight">{category}</span>
     </button>
   );
 };
@@ -77,7 +77,7 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
           <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{welcomeText}</p>
           
           {/* Render category grid */}
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-1 w-full">
             {categories.map((category, index) => (
               <CategoryButton 
                 key={index} 
