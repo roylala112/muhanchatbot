@@ -156,8 +156,8 @@ export default function ChatPage() {
           </div>
 
           {/* Messages Container */}
-          <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
-            <div className="mx-auto max-w-4xl">
+          <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6 w-full">
+            <div className="w-full">
               {messages.map((msg, idx) => (
                 <ChatMessage key={idx} {...msg} />
               ))}
