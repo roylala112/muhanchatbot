@@ -59,7 +59,7 @@ export default function ChatPage() {
     if (!hasShownGreeting) {
       const greetingMessage: ChatMessageProps = {
         role: "assistant",
-        content: "안녕하세요! 가천대학교 AI 도우미입니다.\n어떤 것이 궁금하신가요?",
+        content: `안녕하세요! 가천대학교 AI 도우미입니다.\n\n#캠퍼스맵 #학사일정 #수강신청 #교내연락처\n#등록금 #편의시설 #도서관\n\n어떤 것이 궁금하신가요?`,
         timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
       };
       
@@ -145,7 +145,7 @@ export default function ChatPage() {
     if (!hasShownGreeting) {
       const greetingMessage: ChatMessageProps = {
         role: "assistant",
-        content: "안녕하세요! 가천대학교 AI 도우미입니다.\n어떤 것이 궁금하신가요?",
+        content: `안녕하세요! 가천대학교 AI 도우미입니다.\n\n#캠퍼스맵 #학사일정 #수강신청 #교내연락처\n#등록금 #편의시설 #도서관\n\n어떤 것이 궁금하신가요?`,
         timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
       };
       
@@ -257,10 +257,7 @@ export default function ChatPage() {
         </main>
       ) : (
         <>
-          {/* Category Navigation */}
-          <div className="sticky top-0 z-10 bg-background border-b border-border py-3 flex-shrink-0 flex justify-center">
-            <CategoryPills categories={CATEGORIES} onCategorySelect={handleCategorySelect} />
-          </div>
+          {/* Category Navigation - Removed from here */}
 
           {/* Messages Container */}
           <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6 w-full">

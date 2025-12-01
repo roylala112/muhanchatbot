@@ -1,5 +1,6 @@
 import { SourceLink } from "./SourceLink";
 import mascotImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
+import { useCallback } from "react";
 
 // Add the font face style
 document.head.insertAdjacentHTML('beforeend', `
@@ -20,8 +21,80 @@ export interface ChatMessageProps {
   timestamp?: string;
 }
 
+// Component for rendering category buttons
+const CategoryButton = ({ category, onClick }: { category: string; onClick: (category: string) => void }) => {
+  // Map of category names to emoji icons
+  const categoryIcons: Record<string, string> = {
+    '캠퍼스맵': '🗺️',
+    '학사일정': '📆',
+    '수강신청': '💻',
+    '교내연락처': '☎️',
+    '등록금': '💰',
+    '편의시설': '🏪',
+    '도서관': '📚',
+  };
+
+  return (
+    <button
+      onClick={() => onClick(category)}
+      className="flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-white dark:bg-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 p-2 m-1"
+    >
+      <span className="text-2xl mb-1">{categoryIcons[category] || '🔘'}</span>
+      <span className="text-xs font-medium text-center break-words">{category}</span>
+    </button>
+  );
+};
+
 export function ChatMessage({ role, content, sources, timestamp }: ChatMessageProps) {
   const isUser = role === "user";
+
+  // Function to handle category button click
+  const handleCategoryClick = useCallback((category: string) => {
+    // Remove # if present
+    const cleanCategory = category.startsWith('#') ? category.slice(1) : category;
+    // Emit an event or navigate to the category
+    console.log(`Category selected: ${cleanCategory}`);
+    // You can add navigation logic here if needed
+  }, []);
+
+  // Function to render content with hashtags as buttons
+  const renderContent = (text: string) => {
+    // Check if the message is the welcome message with hashtags
+    if (text.includes('안녕하세요! 가천대학교 AI 도우미입니다.')) {
+      const parts = text.split('\n\n');
+      const welcomeText = parts[0];
+      const hashtagLines = parts.slice(1, -1);
+      const questionText = parts[parts.length - 1];
+      
+      // Extract categories from hashtags
+      const categories = hashtagLines
+        .flatMap(line => line.split(' '))
+        .filter(tag => tag.startsWith('#'))
+        .map(tag => tag.substring(1));
+
+      return (
+        <div className="space-y-4">
+          <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{welcomeText}</p>
+          
+          {/* Render category grid */}
+          <div className="flex flex-wrap justify-center gap-2">
+            {categories.map((category, index) => (
+              <CategoryButton 
+                key={index} 
+                category={category} 
+                onClick={handleCategoryClick} 
+              />
+            ))}
+          </div>
+          
+          <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation'] mt-4">{questionText}</p>
+        </div>
+      );
+    }
+    
+    // For regular messages, just return the content as is
+    return <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{text}</p>;
+  };
 
   return (
     <div
@@ -41,7 +114,7 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"} max-w-[85%] md:max-w-3xl`}>
         {isUser ? (
           <div className="bg-[#E0E0E0] dark:bg-[#202A44] text-[#516295] dark:text-white rounded-3xl px-5 py-3">
-            <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{content}</p>
+            {renderContent(content)}
             {sources && sources.length > 0 && (
               <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
                 {sources.map((source, idx) => (
@@ -52,14 +125,14 @@ export function ChatMessage({ role, content, sources, timestamp }: ChatMessagePr
           </div>
         ) : (
           <div 
-            className="p-[1.5px] rounded-3xl"
+            className="p-[1.5px] rounded-3xl w-full"
             style={{
               background: "linear-gradient(90deg, #2F5093, #6AB7EC, #92C157, #EAA93D)",
               boxShadow: "0 8px 25px rgba(0, 0, 0, 0.08)",
             }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-[22px] px-5 py-3 text-[#516295] dark:text-white">
-              <p className="text-lg leading-relaxed whitespace-pre-wrap font-['Presentation']">{content}</p>
+            <div className="bg-white dark:bg-slate-800 rounded-[22px] px-5 py-4 text-[#516295] dark:text-white">
+              {renderContent(content)}
               {sources && sources.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-current/10 space-y-1">
                   {sources.map((source, idx) => (
