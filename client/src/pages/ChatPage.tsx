@@ -234,7 +234,7 @@ export default function ChatPage() {
             </Button>
           )}
         </div>
-        <h1 className="text-xl font-semibold absolute left-1/2 -translate-x-1/2">가천대학교 AI 도우미</h1>
+        <h1 className="text-xl font-semibold absolute left-1/2 -translate-x-1/2">무한 Assistant</h1>
         <Button
           size="icon"
           variant="ghost"
