@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 
 export interface ChatInputProps {
   onSendMessage?: (message: string) => void;
@@ -10,6 +10,27 @@ export interface ChatInputProps {
 
 export function ChatInput({ onSendMessage, placeholder = "무엇이든 물어보세요", disabled = false }: ChatInputProps) {
   const [message, setMessage] = useState("");
+
+  // Add the font face style for chat input
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'PresentationLight';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+        font-weight: 300;
+        font-display: swap;
+      }
+      .chat-input {
+        font-family: 'PresentationLight', sans-serif;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   const handleSend = () => {
     if (message.trim() && !disabled) {
@@ -43,7 +64,7 @@ export function ChatInput({ onSendMessage, placeholder = "무엇이든 물어보
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={disabled}
-              className="flex-1 text-base bg-transparent outline-none border-none 
+              className="flex-1 text-base bg-transparent outline-none border-none chat-input
                 focus:outline-none focus:ring-0 focus:border-none
                 dark:text-white dark:placeholder-gray-400"
               data-testid="input-message"

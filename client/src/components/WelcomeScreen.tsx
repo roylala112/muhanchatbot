@@ -28,15 +28,18 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
     return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
   };
 
-  // Add the font face style
+  // Add the font face style for search input
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       @font-face {
-        font-family: 'Presentation';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
-        font-weight: 700;
+        font-family: 'PresentationLight';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+        font-weight: 300;
         font-display: swap;
+      }
+      .search-input {
+        font-family: 'PresentationLight', sans-serif;
       }
     `;
     document.head.appendChild(style);
@@ -128,7 +131,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="무엇이든 물어보세요"
-                    className="flex-1 text-base bg-transparent outline-none border-none 
+                    className="flex-1 text-base bg-transparent outline-none border-none search-input
                     focus:outline-none focus:ring-0 focus:border-none
                     dark:text-white dark:placeholder-gray-400"
                     data-testid="input-welcome-search"
