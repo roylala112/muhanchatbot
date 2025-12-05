@@ -2,8 +2,8 @@ import { Badge } from "@/components/ui/badge";
 import { Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 import { CollapsibleBanner } from "./CollapsibleBanner";
-import logoImage from '../../public/images/무한이 누끼.png';
-import gachonLogo from '../../public/images/가천대 홈피 무당이.png';
+import logoImage from '../../public/images/muhani nukki.png';
+import gachonLogo from '../../public/images/mudangee.png';
 
 export interface Category {
   id: string;

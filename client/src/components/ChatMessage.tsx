@@ -1,5 +1,5 @@
 import { SourceLink } from "./SourceLink";
-import mascotImage from '../../public/images/무한이 누끼.png';
+import mascotImage from '../../public/images/muhani nukki.png';
 import { useCallback } from "react";
 
 // Add the font face style
