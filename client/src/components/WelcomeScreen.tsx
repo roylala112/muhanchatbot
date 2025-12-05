@@ -28,7 +28,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
     return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
   };
 
-  // Add the font face style for search input
+  // Add the font face styles
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
@@ -38,9 +38,19 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         font-weight: 300;
         font-display: swap;
       }
+      @font-face {
+        font-family: 'Presentation';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+        font-weight: 500;
+        font-display: swap;
+      }
       .search-input {
         font-family: 'PresentationLight', sans-serif;
         font-size: 1.125rem; /* 18px */
+      }
+      .hashtag {
+        font-family: 'Presentation', sans-serif;
+        font-size: 1rem; /* Increased from default */
       }
     `;
     document.head.appendChild(style);
@@ -153,7 +163,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  className="rounded-full bg-white/40 backdrop-blur-md px-5 py-2 text-sm font-medium shadow-sm border border-[#E4E4E7] hover:bg-white/60 hover:shadow-md transition-all duration-200
+                  className="hashtag rounded-full bg-white/40 backdrop-blur-md px-5 py-2 text-sm shadow-sm border border-[#E4E4E7] hover:bg-white/60 hover:shadow-md transition-all duration-200
                             dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700"
                   onClick={() => handleCategoryClick(category.id)}
                   data-testid={`welcome-category-${category.id}`}
