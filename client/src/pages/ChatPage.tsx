@@ -33,6 +33,29 @@ const CATEGORY_SUGGESTIONS: Record<string, string[]> = {
 };
 
 export default function ChatPage() {
+  // Add font face for the title
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+     @font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+      .chat-title {
+        font-family: 'Presentation', sans-serif;
+        font-size: 1.5rem; /* Increased from default */
+        font-weight: 800; /* Match the font weight with the loaded font */
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const [messages, setMessages] = useState<ChatMessageProps[]>(INITIAL_MESSAGES);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isDark, setIsDark] = useState(false);
@@ -234,7 +257,7 @@ export default function ChatPage() {
             </Button>
           )}
         </div>
-        <h1 className="text-xl font-semibold absolute left-1/2 -translate-x-1/2">무한 Assistant</h1>
+        <h1 className="chat-title text-xl font-semibold absolute left-1/2 -translate-x-1/2">무한 Assistant</h1>
         <Button
           size="icon"
           variant="ghost"
