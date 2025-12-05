@@ -17,6 +17,17 @@ export interface WelcomeScreenProps {
 }
 
 export function WelcomeScreen({ categories, onSearch, onCategorySelect }: WelcomeScreenProps) {
+  // Format today's date as YYYY년 MM월 DD일 (요일)
+  const getFormattedDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = weekdays[today.getDay()];
+    return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+  };
+
   // Add the font face style
   useEffect(() => {
     const style = document.createElement('style');
@@ -155,7 +166,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           {/* Today's Meal Banner */}
           <CollapsibleBanner
             title="오늘의 학식"
-            subtitle="캠퍼스 다이닝"
+            subtitle={getFormattedDate()}
             badgeText="업데이트 예정"
             defaultExpanded={false}
           >
@@ -199,7 +210,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           {/* Campus Calendar Banner */}
           <CollapsibleBanner
             title="오늘의 학사일정"
-            subtitle="캠퍼스 캘린더"
+            subtitle={getFormattedDate()}
             badgeText="업데이트 예정"
             defaultExpanded={false}
           >
