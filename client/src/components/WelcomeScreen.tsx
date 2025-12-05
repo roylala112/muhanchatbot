@@ -40,6 +40,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
       }
       .search-input {
         font-family: 'PresentationLight', sans-serif;
+        font-size: 1.125rem; /* 18px */
       }
     `;
     document.head.appendChild(style);

@@ -23,6 +23,7 @@ export function ChatInput({ onSendMessage, placeholder = "무엇이든 물어보
       }
       .chat-input {
         font-family: 'PresentationLight', sans-serif;
+        font-size: 1.125rem; /* 18px */
       }
     `;
     document.head.appendChild(style);
