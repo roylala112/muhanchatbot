@@ -1,5 +1,5 @@
 import { SourceLink } from "./SourceLink";
-import mascotImage from "C:/Users/user/OneDrive/Pictures/무한이 누끼.png";
+import mascotImage from '../../public/images/무한이 누끼.png';
 import { useCallback } from "react";
 
 // Add the font face style
