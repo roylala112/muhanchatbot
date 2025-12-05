@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { Send } from "lucide-react";
-import { useState, KeyboardEvent } from "react";
+import { Send, ExternalLink } from "lucide-react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { CollapsibleBanner } from "./CollapsibleBanner";
 import logoImage from '../../public/images/muhani nukki.png';
 import gachonLogo from '../../public/images/mudangee.png';
@@ -17,6 +17,24 @@ export interface WelcomeScreenProps {
 }
 
 export function WelcomeScreen({ categories, onSearch, onCategorySelect }: WelcomeScreenProps) {
+  // Add the font face style
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'Presentation';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const [query, setQuery] = useState("");
   const mealTabs = [
     {
@@ -216,18 +234,36 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </div>
 
         {/* Gachon University Logo */}
-        <a 
-          href="https://www.gachon.ac.kr/kor/index.do" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="fixed left-48 bottom-8 hover:opacity-80 transition-opacity z-10"
-        >
-          <img 
-            src={gachonLogo} 
-            alt="Gachon University" 
-            className="h-80 w-auto"
-          />
-        </a>
+        <div className="fixed left-16 bottom-8 z-10">
+          <div className="relative">
+            {/* Mudangee Image */}
+            <a 
+              href="https://www.gachon.ac.kr/kor/index.do" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="absolute -top-12 -left-10 z-20"
+            >
+              <img 
+                src={gachonLogo} 
+                alt="Gachon University" 
+                className="h-28 w-28 object-contain transition-transform group-hover:scale-105"
+              />
+            </a>
+            
+            {/* Button */}
+            <a 
+              href="https://www.gachon.ac.kr/kor/index.do" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="relative z-10 flex items-center gap-3 bg-white dark:bg-slate-800 pl-16 pr-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 border border-slate-200 dark:border-slate-700 group mt-12"
+            >
+              <span className="text-2xl font-semibold text-slate-800 dark:text-slate-200 font-['Presentation'] text-center leading-tight">
+                가천대학교
+              </span>
+              <ExternalLink className="h-5 w-5 text-slate-500 dark:text-slate-400 group-hover:text-blue-500 transition-colors" />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
