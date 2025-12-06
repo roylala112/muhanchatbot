@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useCollapsible } from '@/contexts/CollapsibleContext';
+import { useEffect } from 'react';
 
 interface CollapsibleBannerProps {
   title: string;
@@ -18,6 +19,36 @@ export function CollapsibleBanner({
   children,
   className = '',
 }: CollapsibleBannerProps) {
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'Presentation';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+        font-weight: 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Presentation';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+      .banner-title {
+        font-family: 'Presentation', sans-serif;
+        font-weight: 700;
+      }
+      .banner-subtitle {
+        font-family: 'Presentation', sans-serif;
+        font-weight: 500;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
   const { isActive, toggle } = useCollapsible(title, defaultExpanded);
 
   return (
@@ -27,8 +58,8 @@ export function CollapsibleBanner({
         onClick={toggle}
       >
         <div>
-          {subtitle && <p className="text-xs text-primary/70 dark:text-primary/60 font-semibold">{subtitle}</p>}
-          <h3 className="text-2xl font-bold text-primary dark:text-white">{title}</h3>
+          {subtitle && <p className="banner-subtitle text-xs text-primary/70 dark:text-primary/60 font-semibold">{subtitle}</p>}
+          <h3 className="banner-title text-2xl font-bold text-primary dark:text-white">{title}</h3>
         </div>
         <div className="flex items-center gap-2">
           {badgeText && (

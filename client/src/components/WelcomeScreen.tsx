@@ -52,6 +52,17 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         font-family: 'Presentation', sans-serif;
         font-size: 1rem; /* Increased from default */
       }
+      .banner-content {
+        font-family: 'Presentation', sans-serif;
+      }
+      .banner-title {
+        font-family: 'Presentation', sans-serif;
+        font-weight: 700;
+      }
+      .banner-subtitle {
+        font-family: 'Presentation', sans-serif;
+        font-weight: 500;
+      }
     `;
     document.head.appendChild(style);
     
@@ -184,7 +195,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             badgeText="업데이트 예정"
             defaultExpanded={false}
           >
-            <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
+            <p className="banner-content text-sm text-muted-foreground dark:text-slate-300 mb-4">
               백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
             </p>
 
@@ -192,7 +203,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
               {mealTabs.map((tab) => (
                 <button
                   key={tab.id}
-                  className={`flex-1 rounded-2xl border px-3 py-2 text-sm font-semibold transition-colors ${
+                  className={`banner-content flex-1 rounded-2xl border px-3 py-2 text-sm font-semibold transition-colors ${
                     activeMealTab === tab.id
                       ? "bg-primary text-white border-primary shadow"
                       : "bg-muted dark:bg-slate-800 border-muted-foreground/20 dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:border-primary/50 dark:hover:border-primary/60"
@@ -210,13 +221,13 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                   key={menu.item}
                   className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700 flex items-center justify-between"
                 >
-                  <span className="text-base font-semibold text-primary dark:text-white">{menu.item}</span>
-                  <span className="text-sm font-semibold text-muted-foreground dark:text-slate-300">{menu.price}</span>
+                  <span className="banner-content text-base font-semibold text-primary dark:text-white">{menu.item}</span>
+                  <span className="banner-content text-sm font-semibold text-muted-foreground dark:text-slate-300">{menu.price}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
+            <p className="banner-content text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
               * 실제 메뉴는 추후 시스템 연동 후 자동 갱신됩니다.
             </p>
           </CollapsibleBanner>
@@ -228,7 +239,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             badgeText="업데이트 예정"
             defaultExpanded={false}
           >
-            <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
+            <p className="banner-content text-sm text-muted-foreground dark:text-slate-300 mb-4">
               백엔드 연동 후 오늘 진행 중인 주요 학사 일정을 자동으로 알려줄 예정입니다.
             </p>
             <div className="space-y-3">
@@ -242,17 +253,17 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                   className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-300 rounded-lg px-2.5 py-1 text-xs font-medium">
+                    <div className="banner-content bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-300 rounded-lg px-2.5 py-1 text-xs font-medium">
                       {item.time}
                     </div>
-                    <p className="text-sm font-medium text-foreground dark:text-white">
+                    <p className="banner-content text-sm font-medium text-foreground dark:text-white">
                       {item.event}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
+            <p className="banner-content text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
               * 학사일정은 추후 시스템 연동 후 자동 갱신됩니다.
             </p>
           </CollapsibleBanner>
