@@ -1,7 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Send, ExternalLink } from "lucide-react";
-import { useState, KeyboardEvent, useEffect } from "react";
+import { Send, ExternalLink, Check, ChevronsUpDown } from "lucide-react";
+import { useState, KeyboardEvent, useEffect, useRef } from "react";
 import { CollapsibleBanner } from "./CollapsibleBanner";
+import * as Popover from "@radix-ui/react-popover";
+import { Command } from "cmdk";
 import logoImage from '../../public/images/muhani nukki.png';
 import gachonLogo from '../../public/images/mudangee.png';
 
@@ -17,6 +19,46 @@ export interface WelcomeScreenProps {
 }
 
 export function WelcomeScreen({ categories, onSearch, onCategorySelect }: WelcomeScreenProps) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<{id: string, label: string}[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 검색어에 따른 추천 검색어 필터링
+  useEffect(() => {
+    if (query.length > 0) {
+      // 실제 백엔드 연동 시에는 여기서 API 호출
+      const filtered = [
+        { id: '1', label: `${query} 메뉴` },
+        { id: '2', label: `${query} 영양 정보` },
+        { id: '3', label: `${query} 카테고리` },
+      ].filter(item => 
+        item.label.toLowerCase().includes(query.toLowerCase())
+      );
+      setSuggestions(filtered);
+    } else {
+      setSuggestions([]);
+    }
+  }, [query]);
+
+  const handleSearch = () => {
+    if (query.trim() && onSearch) {
+      onSearch(query);
+      setOpen(false);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    onCategorySelect?.(categoryId);
+    console.log(`Category selected: ${categoryId}`);
+  };
+
   // Format today's date as YYYY년 MM월 DD일 (요일)
   const getFormattedDate = () => {
     const today = new Date();
@@ -71,7 +113,6 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
     };
   }, []);
 
-  const [query, setQuery] = useState("");
   const mealTabs = [
     {
       id: "vision",
@@ -101,24 +142,6 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   const [activeMealTab, setActiveMealTab] = useState(mealTabs[0].id);
   const activeMeal = mealTabs.find((tab) => tab.id === activeMealTab);
 
-  const handleSearch = () => {
-    if (query.trim()) {
-      onSearch?.(query);
-      console.log(`Search query: ${query}`);
-    }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
-  };
-
-  const handleCategoryClick = (categoryId: string) => {
-    onCategorySelect?.(categoryId);
-    console.log(`Category selected: ${categoryId}`);
-  };
 
   return (
     <div className="relative min-h-[70vh] px-4 pt-16 pb-36 lg:pt-24">
@@ -147,24 +170,73 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                 }}
               >
                 {/* Inner box with light/dark mode support */}
-                <div className="rounded-full bg-white dark:bg-slate-800 flex items-center px-4 h-[45px]">
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="무엇이든 물어보세요"
-                    className="flex-1 text-base bg-transparent outline-none border-none search-input
-                    focus:outline-none focus:ring-0 focus:border-none
-                    dark:text-white dark:placeholder-gray-400"
-                    data-testid="input-welcome-search"
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className="hover:opacity-80 transition"
-                    data-testid="button-welcome-search"
-                  >
-                    <Send className="h-6 w-6 text-[#43609C] dark:text-blue-300" />
-                  </button>
+                <div className="relative w-full">
+                  <div className="rounded-full bg-white dark:bg-slate-800 flex items-center px-4 h-[45px]">
+                    <input
+                      ref={inputRef}
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                        setOpen(true);
+                      }}
+                      onKeyDown={handleKeyDown}
+                      onFocus={() => query.length > 0 && setOpen(true)}
+                      placeholder="무엇이든 물어보세요"
+                      className="flex-1 text-base bg-transparent outline-none border-none search-input
+                      focus:outline-none focus:ring-0 focus:border-none
+                      dark:text-white dark:placeholder-gray-400"
+                      data-testid="input-welcome-search"
+                    />
+                    <button
+                      onClick={handleSearch}
+                      className="hover:opacity-80 transition"
+                      data-testid="button-welcome-search"
+                    >
+                      <Send className="h-6 w-6 text-[#43609C] dark:text-blue-300" />
+                    </button>
+                  </div>
+
+                  <Popover.Root open={open} onOpenChange={setOpen}>
+                    <Popover.Anchor />
+                    <Popover.Portal>
+                      <Popover.Content
+                        className="w-[var(--radix-popover-trigger-width)] mt-1 bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700"
+                        align="start"
+                        sideOffset={5}
+                        onOpenAutoFocus={(e) => e.preventDefault()}
+                      >
+                        <Command className="w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+                          <Command.Input
+                            value={query}
+                            onValueChange={setQuery}
+                            className="hidden"
+                          />
+                          <Command.List className="w-full max-h-[300px] overflow-y-auto">
+                            {suggestions.length > 0 ? (
+                              suggestions.map((suggestion) => (
+                                <Command.Item
+                                  key={suggestion.id}
+                                  value={suggestion.label}
+                                  onSelect={() => {
+                                    setQuery(suggestion.label);
+                                    setOpen(false);
+                                    if (onSearch) onSearch(suggestion.label);
+                                  }}
+                                  className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer flex items-center w-full text-left"
+                                >
+                                  <span>{suggestion.label}</span>
+                                </Command.Item>
+                              ))
+                            ) : query.length > 0 ? (
+                              <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                검색어와 일치하는 결과가 없습니다.
+                              </div>
+                            ) : null}
+                          </Command.List>
+                        </Command>
+                      </Popover.Content>
+                    </Popover.Portal>
+                  </Popover.Root>
                 </div>
               </div>
             </div>
