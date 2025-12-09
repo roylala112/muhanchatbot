@@ -24,10 +24,32 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   const [suggestions, setSuggestions] = useState<{id: string, label: string}[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // 검색창에 포커스가 갈 때 자동완성 목록 표시
+  const handleFocus = () => {
+    setOpen(true);
+    // 포커스 시 항상 추천 검색어 표시 (검색어 유무에 따라 다르게)
+    if (query.length > 0) {
+      // 검색어가 있으면 해당 검색어 기반 추천 표시
+      const filtered = [
+        { id: '1', label: `${query} 메뉴` },
+        { id: '2', label: `${query} 영양 정보` },
+        { id: '3', label: `${query} 카테고리` },
+      ];
+      setSuggestions(filtered);
+    } else {
+      // 검색어가 없으면 기본 추천 검색어 표시
+      setSuggestions([
+        { id: 'rec1', label: '인기 검색어 1' },
+        { id: 'rec2', label: '인기 검색어 2' },
+        { id: 'rec3', label: '인기 검색어 3' }
+      ]);
+    }
+  };
+
   // 검색어에 따른 추천 검색어 필터링
   useEffect(() => {
     if (query.length > 0) {
-      // 실제 백엔드 연동 시에는 여기서 API 호출
+      // 검색어가 있을 때 필터링된 추천 검색어 표시
       const filtered = [
         { id: '1', label: `${query} 메뉴` },
         { id: '2', label: `${query} 영양 정보` },
@@ -36,10 +58,17 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         item.label.toLowerCase().includes(query.toLowerCase())
       );
       setSuggestions(filtered);
+    } else if (open) {
+      // 검색창이 포커스되었을 때 기본 추천 검색어 표시
+      setSuggestions([
+        { id: 'rec1', label: '인기 검색어 1' },
+        { id: 'rec2', label: '인기 검색어 2' },
+        { id: 'rec3', label: '인기 검색어 3' }
+      ]);
     } else {
       setSuggestions([]);
     }
-  }, [query]);
+  }, [query, open]);
 
   const handleSearch = () => {
     if (query.trim() && onSearch) {
@@ -180,7 +209,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                         setOpen(true);
                       }}
                       onKeyDown={handleKeyDown}
-                      onFocus={() => query.length > 0 && setOpen(true)}
+                      onFocus={handleFocus}
                       placeholder="무엇이든 물어보세요"
                       className="flex-1 text-base bg-transparent outline-none border-none search-input
                       focus:outline-none focus:ring-0 focus:border-none
@@ -196,7 +225,18 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                     </button>
                   </div>
 
-                  <Popover.Root open={open} onOpenChange={setOpen}>
+                  <Popover.Root 
+                    open={open} 
+                    onOpenChange={(isOpen) => {
+                      // Only close when explicitly requested, not when losing focus
+                      if (!isOpen) {
+                        setOpen(false);
+                      } else {
+                        setOpen(true);
+                        handleFocus(); // Ensure suggestions are updated when opening
+                      }
+                    }}
+                  >
                     <Popover.Anchor />
                     <Popover.Portal>
                       <Popover.Content
@@ -204,6 +244,20 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                         align="start"
                         sideOffset={5}
                         onOpenAutoFocus={(e) => e.preventDefault()}
+                        onPointerDownOutside={(e) => {
+                          // 검색창 클릭 시 팝오버가 닫히지 않도록 방지
+                          const target = e.target as HTMLElement;
+                          if (inputRef.current && inputRef.current.contains(target)) {
+                            e.preventDefault();
+                          }
+                        }}
+                        onInteractOutside={(e) => {
+                          // 검색창과 상호작용 시 팝오버가 닫히지 않도록 방지
+                          const target = e.target as HTMLElement;
+                          if (inputRef.current && inputRef.current.contains(target)) {
+                            e.preventDefault();
+                          }
+                        }}
                       >
                         <Command className="w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
                           <Command.Input
