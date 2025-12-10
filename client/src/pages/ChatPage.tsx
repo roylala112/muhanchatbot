@@ -261,7 +261,9 @@ export default function ChatPage() {
             {showScrollTop && (
               <button
                 onClick={scrollToTop}
-                className="fixed right-6 bottom-24 md:right-8 p-3 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-colors z-50"
+                className={`fixed right-6 bottom-24 md:right-8 p-3 rounded-full transition-all z-50
+                  bg-white text-blue-500 border border-gray-200 hover:bg-gray-50 
+                  dark:border-0 dark:shadow-lg dark:bg-blue-800 dark:text-white dark:hover:bg-blue-900`}
                 aria-label="맨 위로 스크롤"
               >
                 <ArrowUp className="h-5 w-5" />
