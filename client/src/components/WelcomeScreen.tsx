@@ -158,22 +158,101 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   const activeMeal = mealTabs.find(tab => tab.id === activeMealTab);
   const [location] = useLocation();
 
-  // Hide scrollbar when component mounts and show it when unmounts
+  // Add/remove class to prevent scrolling when component mounts/unmounts
   useEffect(() => {
-    // Only run on the welcome page
     if (location === '/') {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
+      // Add classes to both html and body for maximum compatibility
+      document.documentElement.classList.add('welcome-screen-active');
+      document.body.classList.add('welcome-screen-active');
       
+      // Store original styles to restore later
+      const originalStyles = {
+        html: {
+          overflow: document.documentElement.style.overflow,
+          position: document.documentElement.style.position,
+          height: document.documentElement.style.height,
+          width: document.documentElement.style.width,
+          top: document.documentElement.style.top,
+          left: document.documentElement.style.left,
+          right: document.documentElement.style.right,
+          bottom: document.documentElement.style.bottom
+        },
+        body: {
+          overflow: document.body.style.overflow,
+          position: document.body.style.position,
+          height: document.body.style.height,
+          width: document.body.style.width,
+          top: document.body.style.top,
+          left: document.body.style.left,
+          right: document.body.style.right,
+          bottom: document.body.style.bottom
+        }
+      };
+
+      // Apply styles directly to ensure they take effect
+      Object.assign(document.documentElement.style, {
+        overflow: 'hidden',
+        position: 'fixed',
+        height: '100%',
+        width: '100%',
+        top: '0',
+        left: '0',
+        right: '0',
+        bottom: '0'
+      });
+
+      Object.assign(document.body.style, {
+        overflow: 'hidden',
+        position: 'fixed',
+        height: '100%',
+        width: '100%',
+        top: '0',
+        left: '0',
+        right: '0',
+        bottom: '0'
+      });
+      
+      // Prevent all possible scroll events
+      const preventDefault = (e: Event) => {
+        if (e.target && (e.target as HTMLElement).tagName === 'INPUT') return;
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+      
+      // Add all possible scroll-related event listeners
+      const events = [
+        'touchmove', 'touchstart', 'touchend', 'touchcancel',
+        'wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll',
+        'scroll', 'keydown'
+      ];
+      
+      events.forEach(event => {
+        document.addEventListener(event, preventDefault, { passive: false, capture: true });
+        window.addEventListener(event, preventDefault, { passive: false, capture: true });
+      });
+      
+      // Cleanup function
       return () => {
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto';
+        // Restore original styles
+        Object.assign(document.documentElement.style, originalStyles.html);
+        Object.assign(document.body.style, originalStyles.body);
+        
+        // Remove all event listeners
+        events.forEach(event => {
+          document.removeEventListener(event, preventDefault, { capture: true } as any);
+          window.removeEventListener(event, preventDefault, { capture: true } as any);
+        });
+        
+        // Remove classes
+        document.documentElement.classList.remove('welcome-screen-active');
+        document.body.classList.remove('welcome-screen-active');
       };
     }
   }, [location]);
 
   return (
-    <div className="relative min-h-screen px-4 py-8 overflow-hidden" style={{ fontFamily: '"Noto Sans KR", sans-serif' }}>
+    <div className="relative min-h-screen px-4 py-8">
       {/* 메인 콘텐츠 */}
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         <div className="w-full max-w-3xl mx-auto text-center">
