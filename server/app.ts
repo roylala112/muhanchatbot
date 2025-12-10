@@ -86,19 +86,10 @@ export default async function runApp(
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
  
- /* const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });*/
 
-  // 서버 리스닝 코드를 다음과 같이 변경하거나 확인
-const PORT = 3000; // 또는 5000 대신 3000으로 하드코딩
-
-server.listen(PORT, '127.0.0.1', () => { 
-    console.log(`Server listening on 127.0.0.1:${PORT}`);
+// 기존 주석 처리된 부분 삭제해도 됨
+const PORT = parseInt(process.env.PORT || '5000', 10); // 환경변수 PORT가 있으면 사용, 없으면 5000
+server.listen(PORT, '0.0.0.0', () => { 
+    log(`Server listening on 0.0.0.0:${PORT}`);
 });
 }
