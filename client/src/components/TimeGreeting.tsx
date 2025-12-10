@@ -1,5 +1,26 @@
 import { useEffect, useState } from 'react';
 
+// Add font styles
+const fontStyles = `
+  @font-face {
+    font-family: 'PresentationLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Presentation';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+  }
+`;
+
+// Add styles to document head
+const styleElement = document.createElement('style');
+styleElement.textContent = fontStyles;
+document.head.appendChild(styleElement);
+
 const TimeGreeting = () => {
   const [timeString, setTimeString] = useState<React.ReactNode>('');
   const [isWeekend, setIsWeekend] = useState(false);
@@ -176,13 +197,13 @@ const TimeGreeting = () => {
   };
 
   return (
-    <div className="time-greeting bg-white dark:bg-transparent rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center">
+    <div className="time-greeting bg-white dark:bg-transparent rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center" style={{ fontFamily: '"Presentation", sans-serif' }}>
       <div className="w-full px-1">
         <div className="relative w-full flex justify-center">
-          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700 dark:text-white' : 'text-blue-700 dark:text-white'} bg-white/90 dark:bg-[#111729] rounded-2xl border-2 ${isWeekend ? 'border-green-200 dark:border-gray-700' : 'border-blue-200 dark:border-gray-700'} shadow-lg`}>
+          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700 dark:text-white' : 'text-blue-700 dark:text-white'} bg-white/90 dark:bg-[#111729] rounded-2xl border-2 ${isWeekend ? 'border-green-200 dark:border-gray-600' : 'border-blue-200 dark:border-gray-600'} shadow-lg`}>
             <div className="text-2xl font-bold text-center break-words">{timeString}</div>
             {renderClassInfo()}
-            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-[#111729] ${isWeekend ? 'border-r-2 border-b-2 border-green-200 dark:border-gray-700' : 'border-r-2 border-b-2 border-blue-200 dark:border-gray-700'} rotate-45 -z-0`}></div>
+            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-[#111729] ${isWeekend ? 'border-r-2 border-b-2 border-green-200 dark:border-gray-600' : 'border-r-2 border-b-2 border-blue-200 dark:border-gray-600'} rotate-45 -z-0`}></div>
           </div>
         </div>
       </div>
