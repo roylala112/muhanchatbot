@@ -122,10 +122,10 @@ export default function ChatPage() {
     const categoryName = category.label;
     const categorySuggestions = CATEGORY_SUGGESTIONS[categoryId as keyof typeof CATEGORY_SUGGESTIONS] || [];
 
-    // Add user message with category
+    // Add user message with category (without # prefix)
     const userMessage: ChatMessageProps = {
       role: "user",
-      content: `#${categoryName}`,
+      content: categoryName,
       timestamp: new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" }),
     };
     
