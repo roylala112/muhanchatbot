@@ -71,21 +71,37 @@ export default function ChatPage() {
 
   // Handle scroll events
   const handleScroll = () => {
-    if (messagesContainerRef.current) {
-      const shouldShow = messagesContainerRef.current.scrollTop > 100;
-      console.log('Scroll position:', messagesContainerRef.current.scrollTop, 'Show button:', shouldShow);
+    const container = messagesContainerRef.current;
+    if (container) {
+      const isScrollable = container.scrollHeight > container.clientHeight;
+      const shouldShow = isScrollable && container.scrollTop > 100;
+      console.log('Scroll check:', {
+        scrollHeight: container.scrollHeight,
+        clientHeight: container.clientHeight,
+        scrollTop: container.scrollTop,
+        isScrollable,
+        shouldShow
+      });
       setShowScrollTop(shouldShow);
     }
   };
 
-  // Set up scroll event listener
+  // Set up scroll event listener and initial check
   useEffect(() => {
     const container = messagesContainerRef.current;
     if (container) {
+      // Initial check
+      handleScroll();
+      
+      // Add scroll listener
       container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
+      
+      // Cleanup
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
     }
-  }, []);
+  }, [messages]); // Re-run when messages change
 
   // Function to scroll to top
   const scrollToTop = () => {
