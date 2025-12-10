@@ -77,16 +77,20 @@ const TimeGreeting = () => {
       if (currentPeriodInfo) {
         const { period, isBreak } = currentPeriodInfo;
         if (isBreak) {
-          const breakEndTime = schedule[period - 1].start + 50 + 10; // 50분 수업 + 10분 쉬는 시간
-          const breakEndHour = Math.floor(breakEndTime / 60).toString().padStart(2, '0');
-          const breakEndMinute = (breakEndTime % 60).toString().padStart(2, '0');
-          setTimeString(`지금은 ${dayName}요일 ${period}교시 쉬는 시간이에요 (${breakEndHour}:${breakEndMinute}까지)`);
+          setTimeString(
+            <>
+              <div>지금은 {dayName}요일</div>
+              <div>{period}교시 쉬는 시간이에요</div>
+            </>
+          );
           setCurrentPeriod({ period, isBreak: true });
         } else {
-          const periodEndTime = schedule[period - 1].start + 50;
-          const endHour = Math.floor(periodEndTime / 60).toString().padStart(2, '0');
-          const endMinute = (periodEndTime % 60).toString().padStart(2, '0');
-          setTimeString(`지금은 ${dayName}요일 ${period}교시에요 (${endHour}:${endMinute}까지)`);
+          setTimeString(
+            <>
+              <div>지금은 {dayName}요일</div>
+              <div>{period}교시에요</div>
+            </>
+          );
           setCurrentPeriod({ period, isBreak: false });
         }
       } else {
