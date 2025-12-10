@@ -5,7 +5,7 @@ import { QuickSuggestions } from "@/components/QuickSuggestions";
 import { ChatInput } from "@/components/ChatInput";
 import { WelcomeScreen } from "@/components/WelcomeScreen";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Home } from "lucide-react";
+import { Moon, Sun, Home, ArrowUp } from "lucide-react";
 
 //todo: remove mock functionality - these are example messages for design prototype
 const INITIAL_MESSAGES: ChatMessageProps[] = [];
@@ -63,8 +63,39 @@ export default function ChatPage() {
     // Check if greeting was shown before using localStorage
     return localStorage.getItem('hasShownGreeting') === 'true';
   });
+  
+  // State to track scroll position for scroll-to-top button
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  // Handle scroll events
+  const handleScroll = () => {
+    if (messagesContainerRef.current) {
+      const shouldShow = messagesContainerRef.current.scrollTop > 100;
+      console.log('Scroll position:', messagesContainerRef.current.scrollTop, 'Show button:', shouldShow);
+      setShowScrollTop(shouldShow);
+    }
+  };
+
+  // Set up scroll event listener
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
+  // Function to scroll to top
+  const scrollToTop = () => {
+    messagesContainerRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -209,32 +240,50 @@ export default function ChatPage() {
         <>
           {/* Category Navigation - Removed from here */}
 
-          {/* Messages Container */}
-          <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6 w-full">
-            <div className="w-full">
-              {messages.map((msg, idx) => (
-                <ChatMessage 
-                  key={idx} 
-                  {...msg} 
-                  onCategorySelect={handleCategorySelect}
-                />
-              ))}
-
-              {suggestions.length > 0 && (
-                <div className="mb-4 pl-11">
-                  <QuickSuggestions
-                    suggestions={suggestions}
-                    onSuggestionClick={handleSuggestionClick}
+          <div className="relative flex-1 overflow-hidden flex flex-col">
+            {/* Scroll to top button - outside the scrollable area */}
+            {showScrollTop && (
+              <button
+                onClick={scrollToTop}
+                className="fixed right-6 bottom-24 md:right-8 p-3 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-colors z-50"
+                aria-label="맨 위로 스크롤"
+              >
+                <ArrowUp className="h-5 w-5" />
+              </button>
+            )}
+            
+            <main 
+              ref={messagesContainerRef}
+              className="flex-1 overflow-y-auto px-4 md:px-8 py-6 w-full"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
+              <div className="w-full">
+                {messages.map((msg, idx) => (
+                  <ChatMessage 
+                    key={idx} 
+                    {...msg} 
+                    onCategorySelect={handleCategorySelect}
                   />
-                </div>
-              )}
+                ))}
 
-              <div ref={messagesEndRef} />
+                {suggestions.length > 0 && (
+                  <div className="mb-4 pl-11">
+                    <QuickSuggestions
+                      suggestions={suggestions}
+                      onSuggestionClick={handleSuggestionClick}
+                    />
+                  </div>
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
+            </main>
+
+            {/* Input Area */}
+            <div className="flex-shrink-0">
+              <ChatInput onSendMessage={handleSendMessage} />
             </div>
-          </main>
-
-          {/* Input Area */}
-          <ChatInput onSendMessage={handleSendMessage} />
+          </div>
         </>
       )}
     </div>
