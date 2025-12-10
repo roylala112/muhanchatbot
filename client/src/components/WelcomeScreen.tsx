@@ -255,7 +255,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   return (
     <div className="relative min-h-screen px-4 py-8">
       {/* 왼쪽 배너 */}
-      <div className="hidden xl:flex flex-col gap-6 w-[300px] fixed left-32 top-32">
+      <div className="hidden xl:flex flex-col gap-6 w-[420px] fixed left-20 top-32">
         <TimeGreeting />
       </div>
       

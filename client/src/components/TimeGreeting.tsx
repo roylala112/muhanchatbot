@@ -109,41 +109,65 @@ const TimeGreeting = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="time-greeting bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg w-full max-w-[320px] h-[280px] flex flex-col justify-center">
-      <div className="w-full px-4">
-        <div className={`text-2xl font-bold ${isWeekend ? 'text-green-600' : 'text-blue-700'} text-center space-y-2`}>
-          <div className="break-words">{timeString}</div>
-        </div>
-        {!isWeekend && currentPeriod && !currentPeriod.isBreak && (
-          <div className="mt-6 text-gray-600 dark:text-gray-300">
-            <div className="text-lg">
-              {currentPeriod.period === 1 && '1교시: 09:00 ~ 09:50 (50분)'}
-              {currentPeriod.period === 2 && '2교시: 10:00 ~ 10:50 (50분)'}
-              {currentPeriod.period === 3 && '3교시: 11:00 ~ 11:50 (50분)'}
-              {currentPeriod.period === 4 && '4교시: 12:00 ~ 12:50 (50분)'}
-              {currentPeriod.period === 5 && '5교시: 13:00 ~ 13:50 (50분)'}
-              {currentPeriod.period === 6 && '6교시: 14:00 ~ 14:50 (50분)'}
-              {currentPeriod.period === 7 && '7교시: 15:00 ~ 15:50 (50분)'}
-              {currentPeriod.period === 8 && '8교시: 16:00 ~ 16:50 (50분)'}
-              {currentPeriod.period === 9 && '9교시: 17:00 ~ 17:50 (50분)'}
-              {currentPeriod.period === 10 && '10교시: 18:00 ~ 18:50 (50분)'}
+  const renderClassInfo = () => {
+    if (isWeekend) return null;
+    
+    if (currentPeriod) {
+      if (currentPeriod.isBreak) {
+        return (
+          <div className="mt-2 text-center">
+            <div className="text-lg font-semibold text-green-600">
+              쉬는 시간이에요! 🎉
             </div>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              다음 쉬는 시간까지 {50 - (new Date().getMinutes() % 60)}분 남았어요
-            </div>
-          </div>
-        )}
-        {!isWeekend && currentPeriod?.isBreak && (
-          <div className="mt-6 text-gray-600 dark:text-gray-300">
-            <div className="text-lg text-green-600">
-              쉬는 시간이에요!
-            </div>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm text-gray-600">
               다음 수업까지 {10 - (new Date().getMinutes() % 60)}분 남았어요
             </div>
           </div>
-        )}
+        );
+      } else {
+        const periodInfo = [
+          '1교시: 09:00 ~ 09:50 (50분)',
+          '2교시: 10:00 ~ 10:50 (50분)',
+          '3교시: 11:00 ~ 11:50 (50분)',
+          '4교시: 12:00 ~ 12:50 (50분)',
+          '5교시: 13:00 ~ 13:50 (50분)',
+          '6교시: 14:00 ~ 14:50 (50분)',
+          '7교시: 15:00 ~ 15:50 (50분)',
+          '8교시: 16:00 ~ 16:50 (50분)',
+          '9교시: 17:00 ~ 17:50 (50분)',
+          '10교시: 18:00 ~ 18:50 (50분)'
+        ][currentPeriod.period - 1];
+
+        return (
+          <div className="mt-2 text-center">
+            <div className="text-lg font-semibold">
+              {periodInfo}
+            </div>
+            <div className="text-sm text-gray-600">
+              다음 쉬는 시간까지 {50 - (new Date().getMinutes() % 60)}분 남았어요
+            </div>
+          </div>
+        );
+      }
+    }
+    
+    return (
+      <div className="mt-2 text-center text-gray-700 text-lg">
+        수업 시간이 아닙니다
+      </div>
+    );
+  };
+
+  return (
+    <div className="time-greeting bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center">
+      <div className="w-full px-1">
+        <div className="relative w-full flex justify-center">
+          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700' : 'text-blue-700'} bg-white/90 rounded-2xl border-2 ${isWeekend ? 'border-green-200' : 'border-blue-200'} shadow-lg`}>
+            <div className="text-2xl font-bold text-center break-words">{timeString}</div>
+            {renderClassInfo()}
+            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 ${isWeekend ? 'border-r-2 border-b-2 border-green-200' : 'border-r-2 border-b-2 border-blue-200'} rotate-45 -z-0`}></div>
+          </div>
+        </div>
       </div>
     </div>
   );
