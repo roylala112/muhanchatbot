@@ -66,7 +66,6 @@ const TimeGreeting = () => {
           setTimeString(
             <>
               <div>오늘은 {dayName}요일</div>
-              <div className="whitespace-nowrap">수업 시간이 아닙니다</div>
             </>
           );
           setCurrentPeriod(null);
@@ -114,13 +113,31 @@ const TimeGreeting = () => {
     
     if (currentPeriod) {
       if (currentPeriod.isBreak) {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        
+        // Break time is always from :50 to :00 of the next hour
+        const breakEndHour = currentMinute >= 50 ? currentHour + 1 : currentHour;
+        const breakEndMinute = 0;
+        
+        // Calculate time remaining until next class (in minutes)
+        const currentTime = now.getTime();
+        const nextClassTime = new Date(now);
+        if (currentMinute >= 50) {
+          nextClassTime.setHours(currentHour + 1, 0, 0, 0);
+        } else {
+          nextClassTime.setHours(currentHour, 50, 0, 0);
+        }
+        const timeDiff = Math.max(0, Math.ceil((nextClassTime.getTime() - currentTime) / 60000)); // 분 단위로 변환
+        
         return (
           <div className="mt-2 text-center">
             <div className="text-lg font-semibold text-green-600">
-              쉬는 시간이에요! 🎉
+              쉬는 시간: {String(currentHour).padStart(2, '0')}:50~{String(breakEndHour).padStart(2, '0')}:00
             </div>
             <div className="text-sm text-gray-600">
-              다음 수업까지 {10 - (new Date().getMinutes() % 60)}분 남았어요
+              {timeDiff > 0 ? `다음 수업까지 ${timeDiff}분 남았어요` : '다음 수업이 곧 시작해요'}
             </div>
           </div>
         );
