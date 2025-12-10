@@ -24,27 +24,42 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   const inputRef = useRef<HTMLInputElement>(null);
   const [activeMealTab, setActiveMealTab] = useState('vision');
 
-  // 검색창에 포커스가 갈 때 자동완성 목록 표시
+  // 인기 검색어 목록
+  const popularSearches = [
+    { id: 'pop1', label: '도서관 열람실 현황' },
+    { id: 'pop2', label: '강의실 배정 조회' },
+    { id: 'pop3', label:  '장학금 신청'},
+  ];
+
+  // 검색창에 포커스가 갈 때 인기 검색어 표시
   const handleFocus = () => {
-    setOpen(true);
-    updateSuggestions();
+    if (!open) {
+      setOpen(true);
+      setSuggestions(popularSearches);
+    }
   };
 
   // 검색어에 따른 추천 검색어 업데이트
-  const updateSuggestions = () => {
-    if (query.length > 0) {
-      const filtered = [
-        { id: '1', label: `${query} 메뉴` },
-        { id: '2', label: `${query} 영양 정보` },
-        { id: '3', label: `${query} 카테고리` },
-      ];
-      setSuggestions(filtered);
+  const updateSuggestions = (searchQuery = query) => {
+    if (searchQuery.trim().length > 0) {
+      // 실제로는 여기서 API를 호출하거나 더 정교한 추천 로직을 구현할 수 있습니다.
+      const filtered = popularSearches.filter(item => 
+        item.label.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      
+      // 검색어가 포함된 추천 검색어가 없으면 기본 추천어 표시
+      if (filtered.length === 0) {
+        setSuggestions([
+          { id: 'sug1', label: `${searchQuery} 검색하기` },
+          { id: 'sug2', label: `${searchQuery} 정보` },
+          { id: 'sug3', label: `${searchQuery} 조회` },
+        ]);
+      } else {
+        setSuggestions(filtered);
+      }
     } else {
-      setSuggestions([
-        { id: 'rec1', label: '인기 검색어 1' },
-        { id: 'rec2', label: '인기 검색어 2' },
-        { id: 'rec3', label: '인기 검색어 3' }
-      ]);
+      // 검색어가 없으면 인기 검색어 표시
+      setSuggestions(popularSearches);
     }
   };
 
@@ -167,41 +182,73 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
               }}
             >
               <div className="relative w-full">
-                <div className="rounded-full bg-white dark:bg-slate-800 flex items-center px-4 h-12">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={query}
-                    onChange={(e) => {
-                      setQuery(e.target.value);
-                      updateSuggestions();
-                    }}
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleFocus}
-                    placeholder="무엇이든 물어보세요"
-                    className="flex-1 bg-transparent border-none outline-none text-base placeholder-gray-400 dark:placeholder-gray-500 search-input dark:text-white"
-                  />
-                  <button
-                    onClick={handleSearch}
-                    disabled={!query.trim()}
-                    className="ml-2 p-1 rounded-full text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                    aria-label="검색"
-                  >
-                    <Send className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* 추천 검색어 드롭다운 */}
-                <Popover.Root open={open} onOpenChange={setOpen}>
-                  <Popover.Anchor />
+                <Popover.Root 
+                  open={open} 
+                  onOpenChange={(isOpen) => {
+                    // Only close the popover if there's no query and we're not just focusing the input
+                    if (!isOpen && !inputRef.current?.contains(document.activeElement)) {
+                      setOpen(false);
+                    } else if (isOpen) {
+                      setOpen(true);
+                    }
+                  }}
+                >
+                  <Popover.Anchor asChild>
+                    <div className="relative w-full">
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={query}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setQuery(value);
+                          setOpen(true);
+                          updateSuggestions(value);
+                        }}
+                        onKeyDown={handleKeyDown}
+                        onFocus={() => {
+                          setOpen(true);
+                          updateSuggestions(query);
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpen(true);
+                        }}
+                        placeholder="무엇이든 물어보세요"
+                        className="w-full h-12 pl-4 pr-12 rounded-full bg-white dark:bg-slate-800 border-none outline-none text-base placeholder-gray-400 dark:placeholder-gray-500 search-input dark:text-white"
+                      />
+                      <button
+                        onClick={handleSearch}
+                        disabled={!query.trim()}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                        aria-label="검색"
+                      >
+                        <Send className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </Popover.Anchor>
                   <Popover.Portal>
                     <Popover.Content
-                      className="w-[var(--radix-popover-trigger-width)] mt-2 bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700 z-50"
+                      className="w-[var(--radix-popover-trigger-width)] mt-1 bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700 z-50"
                       align="start"
                       sideOffset={5}
                       onOpenAutoFocus={(e) => e.preventDefault()}
+                      onPointerDownOutside={(e) => {
+                        // Don't close if clicking on the input or its container
+                        if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
+                          setOpen(false);
+                        }
+                      }}
                     >
                       <Command className="w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
+                        <Command.Input
+                          value={query}
+                          onValueChange={(value) => {
+                            setQuery(value);
+                            updateSuggestions(value);
+                          }}
+                          className="hidden"
+                        />
                         <Command.List className="w-full max-h-[300px] overflow-y-auto">
                           {suggestions.length > 0 ? (
                             suggestions.map((suggestion) => (
@@ -215,7 +262,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
                                 }}
                                 className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer flex items-center w-full text-left"
                               >
-                                {suggestion.label}
+                                <span>{suggestion.label}</span>
                               </Command.Item>
                             ))
                           ) : query.length > 0 ? (
