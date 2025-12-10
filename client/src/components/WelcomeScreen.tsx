@@ -1,5 +1,6 @@
 import { useState, KeyboardEvent, useEffect, useRef } from "react";
 import { Send, ExternalLink } from "lucide-react";
+import { useLocation } from "wouter";
 import { CollapsibleBanner } from "./CollapsibleBanner";
 import * as Popover from "@radix-ui/react-popover";
 import { Command } from "cmdk";
@@ -155,9 +156,24 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   ];
 
   const activeMeal = mealTabs.find(tab => tab.id === activeMealTab);
+  const [location] = useLocation();
+
+  // Hide scrollbar when component mounts and show it when unmounts
+  useEffect(() => {
+    // Only run on the welcome page
+    if (location === '/') {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      
+      return () => {
+        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+      };
+    }
+  }, [location]);
 
   return (
-    <div className="relative min-h-screen px-4 py-8" style={{ fontFamily: '"Noto Sans KR", sans-serif' }}>
+    <div className="relative min-h-screen px-4 py-8 overflow-hidden" style={{ fontFamily: '"Noto Sans KR", sans-serif' }}>
       {/* 메인 콘텐츠 */}
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         <div className="w-full max-w-3xl mx-auto text-center">
