@@ -466,36 +466,33 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </CollapsibleBanner>
       </div>
 
-      {/* 가천대학교 로고 */}
-      <div className="fixed left-20 bottom-8 z-10 group">
-        <div className="relative">
-          {/* 무당이 로고 */}
-          <a 
-            href="https://www.gachon.ac.kr/kor/index.do" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute -top-12 -left-8 z-20"
-          >
-            <img 
-              src={gachonLogo} 
-              alt="Gachon University" 
-              className="h-28 w-28 object-contain transition-transform group-hover:scale-105"
-            />
-          </a>
-          
-          {/* 버튼 */}
-          <a 
-            href="https://www.gachon.ac.kr/kor/index.do" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="relative z-10 flex items-center gap-3 bg-white dark:bg-slate-800 pl-16 pr-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 border border-slate-200 dark:border-slate-700 group-hover:border-blue-500 dark:group-hover:border-blue-600"
-          >
-            <span className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-              가천대학교
-            </span>
-            <ExternalLink className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
-          </a>
-        </div>
+      {/* 무당이 로고 - 버튼과 분리된 별도의 컨테이너 */}
+      <a 
+        href="https://www.gachon.ac.kr/kor/index.do" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="fixed left-12 bottom-7 z-20 h-28 w-28 transition-transform hover:scale-105"
+      >
+        <img 
+          src={gachonLogo} 
+          alt="Gachon University" 
+          className="h-full w-full object-contain"
+        />
+      </a>
+      
+      {/* 가천대학교 버튼 */}
+      <div className="fixed left-20 bottom-8 z-10">
+        <a 
+          href="https://www.gachon.ac.kr/kor/index.do" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 bg-white dark:bg-slate-800 pl-16 pr-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-600"
+        >
+          <span className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+            가천대학교
+          </span>
+          <ExternalLink className="h-5 w-5 text-gray-400 hover:text-blue-500 transition-colors" />
+        </a>
       </div>
     </div>
   );
