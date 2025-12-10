@@ -176,13 +176,13 @@ const TimeGreeting = () => {
   };
 
   return (
-    <div className="time-greeting bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center">
+    <div className="time-greeting bg-white dark:bg-transparent rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center">
       <div className="w-full px-1">
         <div className="relative w-full flex justify-center">
-          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700' : 'text-blue-700'} bg-white/90 rounded-2xl border-2 ${isWeekend ? 'border-green-200' : 'border-blue-200'} shadow-lg`}>
+          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700 dark:text-white' : 'text-blue-700 dark:text-white'} bg-white/90 dark:bg-[#111729] rounded-2xl border-2 ${isWeekend ? 'border-green-200 dark:border-gray-700' : 'border-blue-200 dark:border-gray-700'} shadow-lg`}>
             <div className="text-2xl font-bold text-center break-words">{timeString}</div>
             {renderClassInfo()}
-            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 ${isWeekend ? 'border-r-2 border-b-2 border-green-200' : 'border-r-2 border-b-2 border-blue-200'} rotate-45 -z-0`}></div>
+            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-[#111729] ${isWeekend ? 'border-r-2 border-b-2 border-green-200 dark:border-gray-700' : 'border-r-2 border-b-2 border-blue-200 dark:border-gray-700'} rotate-45 -z-0`}></div>
           </div>
         </div>
       </div>
