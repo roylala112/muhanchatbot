@@ -6,6 +6,7 @@ import * as Popover from "@radix-ui/react-popover";
 import { Command } from "cmdk";
 import logoImage from '../../public/images/muhani nukki.png';
 import gachonLogo from '../../public/images/mudangee.png';
+import TimeGreeting from "./TimeGreeting";
 
 export interface Category {
   id: string;
@@ -253,6 +254,11 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
 
   return (
     <div className="relative min-h-screen px-4 py-8">
+      {/* 왼쪽 배너 */}
+      <div className="hidden xl:flex flex-col gap-6 w-[300px] fixed left-8 top-32">
+        <TimeGreeting />
+      </div>
+      
       {/* 메인 콘텐츠 */}
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
         <div className="w-full max-w-3xl mx-auto text-center">
