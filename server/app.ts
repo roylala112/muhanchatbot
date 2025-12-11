@@ -88,7 +88,7 @@ export default async function runApp(
  
 
 // 기존 주석 처리된 부분 삭제해도 됨
-const PORT = parseInt(process.env.PORT || '5000', 10); // 환경변수 PORT가 있으면 사용, 없으면 5000
+const PORT = parseInt(process.env.PORT || '65022', 10); // 환경변수 PORT가 있으면 사용, 없으면 5000
 server.listen(PORT, '0.0.0.0', () => { 
     log(`Server listening on 0.0.0.0:${PORT}`);
 });
