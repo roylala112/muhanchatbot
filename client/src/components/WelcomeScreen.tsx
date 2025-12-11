@@ -474,12 +474,12 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         </CollapsibleBanner>
       </div>
 
-      {/* 무당이 로고 - 버튼과 분리된 별도의 컨테이너 */}
+      {/* 무당이 로고 - 버튼과 분리된 별도의 컨테이너 - 모바일에서는 숨김 */}
       <a 
         href="https://www.gachon.ac.kr/kor/index.do" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="fixed left-12 bottom-7 z-20 h-28 w-28 transition-transform hover:scale-105"
+        className="fixed left-12 bottom-7 z-20 h-28 w-28 transition-transform hover:scale-105 hidden md:block"
       >
         <img 
           src={gachonLogo} 
@@ -488,8 +488,8 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         />
       </a>
       
-      {/* 가천대학교 버튼 */}
-      <div className="fixed left-20 bottom-8 z-10">
+      {/* 가천대학교 버튼 - 모바일에서는 숨김 */}
+      <div className="fixed left-20 bottom-8 z-10 hidden md:block">
         <a 
           href="https://www.gachon.ac.kr/kor/index.do" 
           target="_blank" 
