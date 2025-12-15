@@ -261,7 +261,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
       
       {/* 메인 콘텐츠 */}
       <div className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
-        <div className="w-full max-w-3xl mx-auto text-center">
+        <div className="w-full max-w-4xl mx-auto text-center">
           {/* 로고 */}
           <div className="flex justify-center mb-6">
             <img
@@ -274,7 +274,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           </div>
 
           {/* 검색창 */}
-          <div className="w-full max-w-3xl mx-auto mb-5">
+          <div className="w-full max-w-4xl mx-auto mb-5">
             <div 
               className="p-[1.5px] rounded-full"
               style={{
