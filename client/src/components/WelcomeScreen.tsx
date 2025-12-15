@@ -402,14 +402,9 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         <CollapsibleBanner
           title="오늘의 학식"
           subtitle={getFormattedDate()}
-          badgeText="업데이트 예정"
           defaultExpanded={false}
           className="shadow-none"
         >
-          <p className="text-sm text-muted-foreground dark:text-slate-300 mb-4">
-            백엔드 연동 후 실시간으로 각 식당의 메뉴와 가격이 자동으로 보여집니다.
-          </p>
-
           <div className="flex gap-2 mb-4">
             {mealTabs.map((tab) => (
               <button
@@ -440,13 +435,9 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
         <CollapsibleBanner
           title="오늘의 학사일정"
           subtitle={getFormattedDate()}
-          badgeText="업데이트 예정"
           defaultExpanded={false}
           className="shadow-none"
         >
-          <p className="banner-content text-sm text-muted-foreground dark:text-slate-300 mb-4">
-            백엔드 연동 후 오늘 진행 중인 주요 학사 일정을 자동으로 알려줄 예정입니다.
-          </p>
           <div className="space-y-3">
             {[
               { time: "09:00 - 17:00", event: "2024학년도 2학기 수강신청" },
@@ -468,9 +459,6 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
               </div>
             ))}
           </div>
-          <p className="banner-content text-xs text-muted-foreground dark:text-slate-400 text-center mt-4">
-            * 학사일정은 추후 시스템 연동 후 자동 갱신됩니다.
-          </p>
         </CollapsibleBanner>
       </div>
 
