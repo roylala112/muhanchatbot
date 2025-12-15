@@ -99,14 +99,14 @@ const TimeGreeting = () => {
         if (isBreak) {
           setTimeString(
             <>
-              <span>지금은 {dayName}요일 {period}교시 쉬는 시간이에요</span>
+              <span>{dayName}요일 {period}교시 쉬는 시간</span>
             </>
           );
           setCurrentPeriod({ period, isBreak: true });
         } else {
           setTimeString(
             <>
-              <span>지금은 {dayName}요일 {period}교시에요</span>
+              <span>{dayName}요일 {period}교시</span>
             </>
           );
           setCurrentPeriod({ period, isBreak: false });
