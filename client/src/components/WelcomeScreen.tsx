@@ -134,24 +134,36 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
       id: "vision",
       label: "비전타워",
       menus: [
-        { item: "참치마요덮밥", price: "5,200원" },
-        { item: "미역국", price: "1,000원" },
+        { item: "된장찌개" },
+        { item: "제육볶음" },
+        { item: "시금치나물" },
+        { item: "김치" },
+        { item: "깍두기" },
+        { item: "흑미밥" },
       ],
     },
     {
       id: "graduate",
       label: "교육대학원",
       menus: [
-        { item: "직화불고기", price: "5,500원" },
-        { item: "잡곡밥", price: "1,000원" },
+        { item: "우동장국" },
+        { item: "치킨까스" },
+        { item: "단무지" },
+        { item: "오이무침" },
+        { item: "콩나물무침" },
+        { item: "공기밥" },
       ],
     },
     {
       id: "dorm",
       label: "기숙사",
       menus: [
-        { item: "치즈돈가스", price: "5,700원" },
-        { item: "양배추샐러드", price: "1,200원" },
+        { item: "김치찌개" },
+        { item: "돈까스" },
+        { item: "오이양파무침" },
+        { item: "콩나물무침" },
+        { item: "계란후라이" },
+        { item: "보리밥" },
       ],
     },
   ];
@@ -421,11 +433,13 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
             ))}
           </div>
 
-          <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
             {activeMeal?.menus.map((menu, index) => (
-              <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-gray-800 dark:text-gray-200">{menu.item}</span>
-                <span className="text-sm text-gray-600 dark:text-gray-400">{menu.price}</span>
+              <div 
+                key={index} 
+                className="px-3 py-2 bg-gray-50 dark:bg-slate-800 rounded-lg text-gray-800 dark:text-gray-200 text-sm whitespace-nowrap"
+              >
+                {menu.item}
               </div>
             ))}
           </div>
