@@ -3,17 +3,52 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 type SetStateAction<S> = (prevState: S) => S;
 
 type CollapsibleContextType = {
-  activeId: string | null;
-  setActiveId: (id: string | null | SetStateAction<string | null>) => void;
+  activeIds: Set<string>;
+  toggleId: (id: string, isActive: boolean) => void;
+  setDefaultExpanded: (id: string, isExpanded: boolean) => void;
 };
 
 const CollapsibleContext = createContext<CollapsibleContextType | undefined>(undefined);
 
 export function CollapsibleProvider({ children }: { children: ReactNode }) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeIds, setActiveIds] = useState<Set<string>>(new Set());
+  const [defaultExpandedMap, setDefaultExpandedMap] = useState<Record<string, boolean>>({});
+
+  // Apply default expanded states after initial render
+  useEffect(() => {
+    const newActiveIds = new Set<string>();
+    
+    // Add all IDs that are marked as default expanded
+    Object.entries(defaultExpandedMap).forEach(([id, isExpanded]) => {
+      if (isExpanded) {
+        newActiveIds.add(id);
+      }
+    });
+
+    setActiveIds(newActiveIds);
+  }, [defaultExpandedMap]);
+
+  const toggleId = (id: string, isActive: boolean) => {
+    setActiveIds(prevIds => {
+      const newIds = new Set(prevIds);
+      if (isActive) {
+        newIds.delete(id);
+      } else {
+        newIds.add(id);
+      }
+      return newIds;
+    });
+  };
+
+  const setDefaultExpanded = (id: string, isExpanded: boolean) => {
+    setDefaultExpandedMap(prev => ({
+      ...prev,
+      [id]: isExpanded
+    }));
+  };
 
   return (
-    <CollapsibleContext.Provider value={{ activeId, setActiveId }}>
+    <CollapsibleContext.Provider value={{ activeIds, toggleId, setDefaultExpanded }}>
       {children}
     </CollapsibleContext.Provider>
   );
@@ -25,18 +60,18 @@ export function useCollapsible(id: string, defaultExpanded = false) {
     throw new Error('useCollapsible must be used within a CollapsibleProvider');
   }
 
-  const { activeId, setActiveId } = context;
-  const isActive = activeId === id;
+  const { activeIds, toggleId, setDefaultExpanded } = context;
+  const isActive = activeIds.has(id);
   
-  // Set the first banner as active by default if no banner is active and defaultExpanded is true
-  React.useEffect(() => {
-    if (defaultExpanded && activeId === null) {
-      setActiveId(id);
+  // Register default expanded state
+  useEffect(() => {
+    if (defaultExpanded) {
+      setDefaultExpanded(id, true);
     }
-  }, []);
+  }, [id, defaultExpanded, setDefaultExpanded]);
 
   const toggle = () => {
-    setActiveId(prevId => prevId === id ? null : id);
+    toggleId(id, isActive);
   };
 
   return {

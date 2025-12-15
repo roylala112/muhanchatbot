@@ -1,4 +1,3 @@
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useCollapsible } from '@/contexts/CollapsibleContext';
 import { useEffect } from 'react';
 
@@ -19,6 +18,8 @@ export function CollapsibleBanner({
   children,
   className = '',
 }: CollapsibleBannerProps) {
+  // Always set isActive to true to keep the banner expanded
+  const isActive = true;
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
@@ -49,30 +50,19 @@ export function CollapsibleBanner({
       document.head.removeChild(style);
     };
   }, []);
-  const { isActive, toggle } = useCollapsible(title, defaultExpanded);
 
   return (
     <div className={`bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col ${className}`}>
-      <div 
-        className="flex items-center justify-between cursor-pointer"
-        onClick={toggle}
-      >
+      <div className="flex items-center justify-between">
         <div>
           {subtitle && <p className="banner-subtitle text-xs text-primary/70 dark:text-primary/60 font-semibold">{subtitle}</p>}
           <h3 className="banner-title text-2xl font-bold text-primary dark:text-white">{title}</h3>
         </div>
-        <div className="flex items-center gap-2">
-          {badgeText && (
-            <span className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
-              {badgeText}
-            </span>
-          )}
-          {isActive ? (
-            <ChevronUp className="h-5 w-5 text-muted-foreground" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-muted-foreground" />
-          )}
-        </div>
+        {badgeText && (
+          <span className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
+            {badgeText}
+          </span>
+        )}
       </div>
       
       <div className={`transition-all duration-300 overflow-hidden ${isActive ? 'mt-4 opacity-100' : 'h-0 opacity-0 mt-0'}`}>
