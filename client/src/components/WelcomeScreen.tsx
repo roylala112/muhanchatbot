@@ -452,24 +452,19 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
           defaultExpanded={false}
           className="shadow-none"
         >
-          <div className="space-y-3">
+          <div className="space-y-2">
             {[
-              { time: "09:00 - 17:00", event: "2024학년도 2학기 수강신청" },
-              { time: "10:30 - 12:00", event: "캡스톤 디자인 발표회" },
-              { time: "14:00 - 16:00", event: "학부 연구생 모집 설명회" },
-            ].map((item, index) => (
+              "2024학년도 2학기 수강신청",
+              "캡스톤 디자인 발표회",
+              "학부 연구생 모집 설명회",
+            ].map((event, index) => (
               <div
                 key={index}
-                className="p-4 rounded-2xl bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700"
+                className="p-3 rounded-lg bg-muted/50 dark:bg-slate-800 border border-muted-foreground/20 dark:border-slate-700"
               >
-                <div className="flex items-start gap-3">
-                  <div className="banner-content bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-300 rounded-lg px-2.5 py-1 text-xs font-medium">
-                    {item.time}
-                  </div>
-                  <p className="banner-content text-sm font-medium text-foreground dark:text-white">
-                    {item.event}
-                  </p>
-                </div>
+                <p className="text-sm font-medium text-foreground dark:text-white">
+                  {event}
+                </p>
               </div>
             ))}
           </div>
