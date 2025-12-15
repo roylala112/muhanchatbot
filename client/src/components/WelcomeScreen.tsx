@@ -418,7 +418,7 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
       </div>
 
       {/* 우측 배너 (데스크톱 전용) */}
-      <div className="hidden xl:flex flex-col gap-6 w-[380px] fixed right-8 top-32">
+      <div className="hidden 2.5xl:flex flex-col gap-6 w-[380px] fixed right-8 top-32">
         {/* 오늘의 학식 배너 */}
         <CollapsibleBanner
           title="오늘의 학식"

@@ -10,6 +10,9 @@ export default {
         md: ".375rem", /* 6px */
         sm: ".1875rem", /* 3px */
       },
+            screens: {
+        '2.5xl': '1700px',  // 2xl(1536px)과 3xl(1920px) 사이의 값
+      },
       colors: {
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
