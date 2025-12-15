@@ -267,8 +267,17 @@ export function WelcomeScreen({ categories, onSearch, onCategorySelect }: Welcom
   return (
     <div className="relative min-h-screen px-4 py-8">
       {/* 왼쪽 배너 */}
-      <div className="hidden xl:flex flex-col gap-6 w-[420px] fixed left-20 top-32">
-        <TimeGreeting />
+      <div className="hidden xl:flex flex-col gap-6 w-[380px] fixed left-8 top-32">
+        <CollapsibleBanner
+          title=""
+          subtitle={getFormattedDate()}
+          defaultExpanded={false}
+          className="shadow-none"
+        >
+          <div className="px-4 pt-2 pb-4 -mt-2">
+            <TimeGreeting />
+          </div>
+        </CollapsibleBanner>
       </div>
       
       {/* 메인 콘텐츠 */}

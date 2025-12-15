@@ -99,16 +99,14 @@ const TimeGreeting = () => {
         if (isBreak) {
           setTimeString(
             <>
-              <div>지금은 {dayName}요일</div>
-              <div>{period}교시 쉬는 시간이에요</div>
+              <span>지금은 {dayName}요일 {period}교시 쉬는 시간이에요</span>
             </>
           );
           setCurrentPeriod({ period, isBreak: true });
         } else {
           setTimeString(
             <>
-              <div>지금은 {dayName}요일</div>
-              <div>{period}교시에요</div>
+              <span>지금은 {dayName}요일 {period}교시에요</span>
             </>
           );
           setCurrentPeriod({ period, isBreak: false });
@@ -178,7 +176,7 @@ const TimeGreeting = () => {
 
         return (
           <div className="mt-2 text-center">
-            <div className="text-lg font-semibold">
+            <div className="text-lg font-semibold text-primary dark:text-white">
               {periodInfo}
             </div>
             <div className="text-sm text-gray-600">
@@ -197,16 +195,11 @@ const TimeGreeting = () => {
   };
 
   return (
-    <div className="time-greeting bg-white dark:bg-transparent rounded-xl p-4 shadow-lg w-full max-w-[420px] min-w-[380px] h-[280px] flex flex-col justify-center" style={{ fontFamily: '"Presentation", sans-serif' }}>
-      <div className="w-full px-1">
-        <div className="relative w-full flex justify-center">
-          <div className={`relative z-10 px-6 py-4 w-[360px] ${isWeekend ? 'text-green-700 dark:text-white' : 'text-blue-700 dark:text-white'} bg-white/90 dark:bg-[#111729] rounded-2xl border-2 ${isWeekend ? 'border-green-200 dark:border-gray-600' : 'border-blue-200 dark:border-gray-600'} shadow-lg`}>
-            <div className="text-2xl font-bold text-center break-words">{timeString}</div>
-            {renderClassInfo()}
-            <div className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-white/90 dark:bg-[#111729] ${isWeekend ? 'border-r-2 border-b-2 border-green-200 dark:border-gray-600' : 'border-r-2 border-b-2 border-blue-200 dark:border-gray-600'} rotate-45 -z-0`}></div>
-          </div>
-        </div>
+    <div className="w-full">
+      <div className="text-2xl font-bold text-center text-primary dark:text-white mb-4 whitespace-nowrap">
+        {timeString}
       </div>
+      {renderClassInfo()}
     </div>
   );
 };

@@ -53,9 +53,9 @@ export function CollapsibleBanner({
 
   return (
     <div className={`bg-white dark:bg-slate-900 border border-primary/20 dark:border-slate-700 rounded-3xl p-6 shadow-md dark:shadow-none flex flex-col ${className}`}>
-      <div className="flex items-center justify-between">
-        <div>
-          {subtitle && <p className="banner-subtitle text-xs text-primary/70 dark:text-primary/60 font-semibold">{subtitle}</p>}
+      <div className="flex flex-col items-center text-center">
+        <div className="w-full">
+          {subtitle && <p className="banner-subtitle text-sm text-primary/70 dark:text-primary/60 font-semibold">{subtitle}</p>}
           <h3 className="banner-title text-2xl font-bold text-primary dark:text-white">{title}</h3>
         </div>
         {badgeText && (
